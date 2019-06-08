@@ -1,45 +1,44 @@
 import { LitElement, html } from 'lit-element';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { fireauth } from '../db';
 import './twaat/input';
 import './twaat/list';
 import './auth/app-auth';
 import './auth/app-login';
 
+const auth = (user = null) => {
+  if (user) {
+    return html`
+      <div>${user.displayName}</div>
+    `;
+  }
+  return html`
+    <app-auth></app-auth>
+    <app-login></app-login>
+  `;
+};
+
 class Twax extends LitElement {
   constructor() {
     super();
-    this.logged = true;
+    this.user = {};
   }
 
   static get properties() {
     return {
-      logged: Boolean,
+      user: Object,
     };
   }
 
   firstUpdated() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user);
-        localStorage.setItem('uid', user.uid);
-        this.logged = true;
-      } else {
-        localStorage.removeItem('uid');
-        this.logged = false;
-      }
+    fireauth.onAuthStateChanged((user) => {
+      this.user = user;
     });
   }
 
   render() {
     return html`
       <h1>Twittax</h1>
-      ${!this.logged
-    ? html`
-            <app-auth></app-auth>
-            <app-login></app-login>
-          `
-    : ''}
+      ${auth(this.user)}
       <app-twaat-input></app-twaat-input>
       <app-twaat-list></app-twaat-list>
     `;
