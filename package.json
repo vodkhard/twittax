@@ -1,0 +1,21 @@
+{
+  "name": "twittax",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npx parcel index.html",
+    "build": "npx parcel build index.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "dayjs": "^1.8.14",
+    "firebase": "^6.1.1",
+    "lit-element": "^2.1.0"
+  },
+  "browserslist": [
+    "> 5%"
+  ]
+}
