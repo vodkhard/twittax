@@ -1,7 +1,8 @@
-import { LitElement, html } from "lit-element";
-import "./twaat-input";
+import { LitElement, html } from 'lit-element';
+import './twaat-input';
 
 class Twax extends LitElement {
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return html`
       <div>Salut</div>
@@ -10,4 +11,4 @@ class Twax extends LitElement {
   }
 }
 
-customElements.define("app-twax", Twax);
+customElements.define('app-twax', Twax);

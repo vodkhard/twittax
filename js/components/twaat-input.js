@@ -1,34 +1,34 @@
-import { LitElement, html } from "lit-element";
-import dayjs from "dayjs/esm/index";
-import { database } from "../db";
+import { LitElement, html } from 'lit-element';
+import dayjs from 'dayjs/esm/index';
+import database from '../db';
 
 class TwaatInput extends LitElement {
   constructor() {
     super();
-    this.text = "test";
+    this.text = 'test';
   }
 
   static get properties() {
     return {
       text: {
         type: String,
-        reflect: true
+        reflect: true,
       },
       handleSubmit: {
-        type: Function
-      }
+        type: Function,
+      },
     };
   }
 
   firstUpdated() {
-    this.handleSubmit = e => {
+    this.handleSubmit = (e) => {
       e.preventDefault();
       database
-        .ref("/twaats")
+        .ref('/twaats')
         .child('@vodkhard')
         .set({
           content: this.text,
-          createdAt: dayjs().valueOf()
+          createdAt: dayjs().valueOf(),
         });
     };
   }
@@ -49,4 +49,4 @@ class TwaatInput extends LitElement {
   }
 }
 
-customElements.define("app-twaat-input", TwaatInput);
+customElements.define('app-twaat-input', TwaatInput);
