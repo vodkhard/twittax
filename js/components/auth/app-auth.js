@@ -1,7 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import db from '../../db';
+import { firestore, fireauth } from '../../db';
 
 class AppAuth extends LitElement {
   constructor() {
@@ -24,17 +22,21 @@ class AppAuth extends LitElement {
     if (!this.email || !this.password) {
       return console.error('Email or password incorrect');
     }
-    return firebase
-      .auth()
+    const username = `@${this.username}`;
+    return fireauth
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(({ user }) => {
-        console.log('Registration successful', user);
-        localStorage.setItem('uid', user.uid);
-        db.collection('users')
+        user.updateProfile({
+          displayName: username,
+        });
+        firestore
+          .collection('users')
           .doc(user.uid)
           .set({
-            name: `@${this.username}`,
+            name: username,
+            email: user.email,
           });
+
         this.email = '';
         this.password = '';
       })

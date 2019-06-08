@@ -16,26 +16,13 @@ class AppLogin extends LitElement {
     };
   }
 
-  firstUpdated() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        localStorage.setItem('logged', false);
-        return console.log('logout');
-      }
-      localStorage.setItem('logged', true);
-      this.dispatchEvent(new CustomEvent('user-logged', { detail: { user } }));
-    });
-  }
-
   handleForm(e) {
     e.preventDefault();
     if (!this.email || !this.password) return console.error('Email or password incorrect');
     return firebase
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
-      .then(({ user }) => {
-        console.log('Login successful!', user);
-        localStorage.setItem('uid', user.uid);
+      .then(() => {
         this.email = '';
         this.password = '';
       })

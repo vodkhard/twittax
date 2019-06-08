@@ -1,5 +1,5 @@
 import { LitElement } from 'lit-element';
-import firestore from '../db';
+import { firestore } from '../db';
 
 class AppStore extends LitElement {
   constructor() {
