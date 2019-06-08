@@ -1,1 +1,1 @@
-import './components/twax';
+import './components/twittax';
