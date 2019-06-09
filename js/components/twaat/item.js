@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import { firestore } from '../../db';
+import twaatsRepository from '../../data/repositroy/twaats';
 import './comment';
 
 class Item extends LitElement {
@@ -7,12 +7,14 @@ class Item extends LitElement {
     super();
     this.twaat = {};
     this.author = null;
+    this.child = null;
   }
 
   static get properties() {
     return {
       twaat: Object,
       author: Object,
+      child: Object,
     };
   }
 
@@ -20,19 +22,25 @@ class Item extends LitElement {
     this.twaat.author.get().then((doc) => {
       this.author = doc.data();
     });
-    this.onUpdate = (type) => {
-      firestore
-        .collection('twaats')
-        .doc(this.twaat.id)
-        .update({
-          [type]: this.twaat[type] + 1,
+    if (this.twaat.child) {
+      this.twaat.child.get().then((doc) => {
+        this.child = doc.data();
+      });
+    }
+    this.onUpdate = type => twaatsRepository.update(this.twaat.id, {
+      [type]: this.twaat[type] + 1,
+    });
+    this.onRetwaat = () => {
+      this.onUpdate('retwaats').then(() => {
+        twaatsRepository.add({
+          child: twaatsRepository.get(this.twaat.id),
+          like: 0,
+          retwaats: 0,
         });
+      });
     };
     this.onDelete = () => {
-      firestore
-        .collection('twaats')
-        .doc(this.twaat.id)
-        .delete();
+      twaatsRepository.del(this.twaat.id);
     };
   }
 
@@ -48,8 +56,14 @@ class Item extends LitElement {
             <i>comment</i>
           `}
         <p>${this.twaat.content}</p>
+        ${this.child
+          && html`
+            <i>retwaat</i><br />
+            <p>${this.child.content}</p>
+            <i>end retwaat</i><br />
+          `}
         <button @click=${() => this.onUpdate('like')}>${this.twaat.like} likes!</button>
-        <button @click=${() => this.onUpdate('retwaats')}>${this.twaat.retwaats} retwaats!</button>
+        <button @click=${this.onRetwaat}>${this.twaat.retwaats} retwaats!</button>
         <button @click=${this.onDelete}>Delete</button>
         <app-twaat-comment .parent=${this.twaat.id} />
       </div>

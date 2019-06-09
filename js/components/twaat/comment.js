@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import { firestore, fireauth } from '../../db';
+import twaatsRepository from '../../data/repositroy/twaats';
 
 class Comment extends LitElement {
   constructor() {
@@ -22,14 +22,12 @@ class Comment extends LitElement {
 
     this.handleSubmit = (e) => {
       e.preventDefault();
-      firestore
-        .collection('twaats')
+      twaatsRepository
         .add({
           content: this.content,
           like: 0,
           retwaats: 0,
-          author: firestore.collection('users').doc(fireauth.currentUser.uid),
-          parent: firestore.collection('twaats').doc(this.parent),
+          parent: twaatsRepository.get(this.parent),
         })
         .then(() => {
           this.content = '';

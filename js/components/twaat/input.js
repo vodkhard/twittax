@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import { firestore, fireauth } from '../../db';
+import twaatsRepository from '../../data/repositroy/twaats';
 
 class Input extends LitElement {
   constructor() {
@@ -21,13 +21,11 @@ class Input extends LitElement {
 
     this.handleSubmit = (e) => {
       e.preventDefault();
-      firestore
-        .collection('twaats')
+      twaatsRepository
         .add({
           content: this.content,
           like: 0,
           retwaats: 0,
-          author: firestore.collection('users').doc(fireauth.currentUser.uid),
         })
         .then(() => {
           this.content = '';
