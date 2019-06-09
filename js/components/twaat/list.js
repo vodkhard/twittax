@@ -22,7 +22,7 @@ class List extends LitElement {
     return html`
       <h2>This is the list :</h2>
       <app-store collection="twaats" @child-changed=${this.twaatsChanged}></app-store>
-      ${this.twaats.reverse().map(
+      ${this.twaats.map(
     twaat => html`
           <app-twaat-item .twaat=${twaat}></app-twaat-item>
           <hr />

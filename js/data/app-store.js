@@ -16,18 +16,21 @@ class AppStore extends LitElement {
   }
 
   firstUpdated() {
-    firestore.collection(this.collection).onSnapshot((ref) => {
-      ref.docChanges().forEach(({ oldIndex, doc, type }) => {
-        if (type === 'added') {
-          this.data.push({ id: doc.id, ...doc.data() });
-        } else if (type === 'removed') {
-          this.data.splice(oldIndex, 1);
-        } else if (type === 'modified') {
-          this.data.splice(oldIndex, 1, { id: doc.id, ...doc.data() });
-        }
-        this.dispatchEvent(new CustomEvent('child-changed', { detail: [...this.data] }));
+    firestore
+      .collection(this.collection)
+      .orderBy('date', 'desc')
+      .onSnapshot((ref) => {
+        ref.docChanges().forEach(({ oldIndex, doc, type }) => {
+          if (type === 'added') {
+            this.data.push({ id: doc.id, ...doc.data() });
+          } else if (type === 'removed') {
+            this.data.splice(oldIndex, 1);
+          } else if (type === 'modified') {
+            this.data.splice(oldIndex, 1, { id: doc.id, ...doc.data() });
+          }
+          this.dispatchEvent(new CustomEvent('child-changed', { detail: [...this.data] }));
+        });
       });
-    });
   }
 }
 
