@@ -14,8 +14,8 @@ class List extends LitElement {
     };
   }
 
-  twaatsChanged({ detail }) {
-    this.twaats = detail;
+  twaatsChanged({ detail: twaats }) {
+    this.twaats = twaats;
   }
 
   render() {

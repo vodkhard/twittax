@@ -26,6 +26,7 @@ class Input extends LitElement {
         .add({
           content: this.content,
           like: 0,
+          retwaats: 0,
           author: firestore.collection('users').doc(fireauth.currentUser.uid),
         })
         .then(() => {
