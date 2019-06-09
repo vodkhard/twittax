@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/vodkhard/twittax/raw/master/assets/logo.png">
+</p>
+
 # TWITTAX
 
 ### Installation
