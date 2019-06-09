@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit-element';
 import { firestore } from '../../db';
+import './comment';
 
 class Item extends LitElement {
   constructor() {
@@ -38,14 +39,19 @@ class Item extends LitElement {
   render() {
     return html`
       <div>
-        <button @click=${this.onDelete}>FOR DEV (need to be restricted) : delete!</button>
         ${this.author
           && html`
             <div>${this.author.name}</div>
           `}
+        ${this.twaat.parent
+          && html`
+            <i>comment</i>
+          `}
         <p>${this.twaat.content}</p>
         <button @click=${() => this.onUpdate('like')}>${this.twaat.like} likes!</button>
         <button @click=${() => this.onUpdate('retwaats')}>${this.twaat.retwaats} retwaats!</button>
+        <button @click=${this.onDelete}>Delete</button>
+        <app-twaat-comment .parent=${this.twaat.id} />
       </div>
     `;
   }
