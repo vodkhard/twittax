@@ -70,7 +70,7 @@ class Item extends LitElement {
             <p>${this.child.content}</p>
             <i>end retwaat</i><br />
           `}
-        <div class="small">${new Date(this.twaat.date)}</div>
+        <div class="small">${this.twaat.createdAt.toDate().toLocaleString()}</div>
         <button @click=${() => this.onUpdate('like')}>${this.twaat.like} likes!</button>
         <button @click=${this.onRetwaat}>${this.twaat.retwaats} retwaats!</button>
         <button @click=${this.onDelete}>Delete</button>

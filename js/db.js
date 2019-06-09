@@ -6,6 +6,6 @@ import config from './config';
 firebase.initializeApp(config);
 
 firebase.firestore().enablePersistence();
-export const serverTimestamp = firebase.firestore.Timestamp.now().toMillis();
+export const fieldValue = firebase.firestore.FieldValue;
 export const firestore = firebase.firestore();
 export const fireauth = firebase.auth();

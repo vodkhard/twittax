@@ -4,13 +4,11 @@ import { firestore } from '../db';
 class AppStore extends LitElement {
   constructor() {
     super();
-    this.data = [];
     this.collection = '';
   }
 
   static get properties() {
     return {
-      data: Array,
       collection: String,
     };
   }
@@ -18,18 +16,13 @@ class AppStore extends LitElement {
   firstUpdated() {
     firestore
       .collection(this.collection)
-      .orderBy('date', 'desc')
+      .orderBy('createdAt', 'desc')
       .onSnapshot((ref) => {
-        ref.docChanges().forEach(({ oldIndex, doc, type }) => {
-          if (type === 'added') {
-            this.data.push({ id: doc.id, ...doc.data() });
-          } else if (type === 'removed') {
-            this.data.splice(oldIndex, 1);
-          } else if (type === 'modified') {
-            this.data.splice(oldIndex, 1, { id: doc.id, ...doc.data() });
-          }
-          this.dispatchEvent(new CustomEvent('child-changed', { detail: [...this.data] }));
+        const data = [];
+        ref.forEach((doc) => {
+          data.push({ id: doc.id, ...doc.data() });
         });
+        this.dispatchEvent(new CustomEvent('child-changed', { detail: data }));
       });
   }
 }
