@@ -5,18 +5,6 @@ import './twaat/list';
 import './auth/app-auth';
 import './auth/app-login';
 
-const auth = (user = null) => {
-  if (user) {
-    return html`
-      <div>${user.displayName}</div>
-    `;
-  }
-  return html`
-    <app-auth></app-auth>
-    <app-login></app-login>
-  `;
-};
-
 class Twax extends LitElement {
   constructor() {
     super();
@@ -35,10 +23,22 @@ class Twax extends LitElement {
     });
   }
 
+  get auth() {
+    if (this.user) {
+      return html`
+        <div>${this.user.displayName}</div>
+      `;
+    }
+    return html`
+      <app-auth></app-auth>
+      <app-login></app-login>
+    `;
+  }
+
   render() {
     return html`
       <h1>Twittax</h1>
-      ${auth(this.user)}
+      ${this.auth}
       <app-twaat-input></app-twaat-input>
       <app-twaat-list></app-twaat-list>
     `;
