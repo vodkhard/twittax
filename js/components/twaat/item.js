@@ -57,7 +57,7 @@ class Item extends LitElement {
       <div>
         ${this.author
           && html`
-            <div>${this.author.name}</div>
+            <a href=${`/users/${this.author.name}`}>${this.author.name}</a>
           `}
         ${this.twaat.parent
           && html`
