@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
 import './comment';
+import './content';
 
 class Item extends LitElement {
   constructor() {
@@ -63,7 +64,8 @@ class Item extends LitElement {
           && html`
             <i>comment</i>
           `}
-        <p>${this.twaat.content}</p>
+
+        <app-twaats-content .content=${this.twaat.content}></app-twaats-content>
         ${this.child
           && html`
             <i>retwaat</i><br />

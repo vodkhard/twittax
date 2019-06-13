@@ -19,7 +19,6 @@ class AppStore extends LitElement {
     let query = firestore.collection(this.collection);
 
     this.conditions.forEach((condition) => {
-      console.log(condition);
       query = query.where(...condition);
     });
 

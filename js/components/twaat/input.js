@@ -21,11 +21,13 @@ class Input extends LitElement {
 
     this.handleSubmit = (e) => {
       e.preventDefault();
+      const tags = [...this.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);
       twaatsRepository
         .add({
           content: this.content,
           like: 0,
           retwaats: 0,
+          tags: tags || [],
         })
         .then(() => {
           this.content = '';
