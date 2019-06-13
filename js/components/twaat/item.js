@@ -6,14 +6,14 @@ import './content';
 class Item extends LitElement {
   constructor() {
     super();
-    this.twaat = {};
+    this.item = {};
     this.author = null;
     this.child = null;
   }
 
   static get properties() {
     return {
-      twaat: Object,
+      data: Object,
       author: Object,
       child: Object,
     };
@@ -22,34 +22,37 @@ class Item extends LitElement {
   static get styles() {
     return css`
       .small {
-        font-size: 0.5rem;
+        font-size: 1rem;
+      }
+      .retwaat {
+        border: 1px solid red;
       }
     `;
   }
 
   async firstUpdated() {
-    this.twaat.author.get().then((doc) => {
+    this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
-    if (this.twaat.child) {
-      this.twaat.child.get().then((doc) => {
+    if (this.item.child) {
+      this.item.child.get().then((doc) => {
         this.child = doc.data();
       });
     }
-    this.onUpdate = type => twaatsRepository.update(this.twaat.id, {
-      [type]: this.twaat[type] + 1,
+    this.onUpdate = type => twaatsRepository.update(this.item.id, {
+      [type]: this.item[type] + 1,
     });
     this.onRetwaat = () => {
       this.onUpdate('retwaats').then(() => {
         twaatsRepository.add({
-          child: twaatsRepository.get(this.twaat.id),
+          child: twaatsRepository.get(this.item.id),
           like: 0,
           retwaats: 0,
         });
       });
     };
     this.onDelete = () => {
-      twaatsRepository.del(this.twaat.id);
+      twaatsRepository.del(this.item.id);
     };
   }
 
@@ -60,23 +63,28 @@ class Item extends LitElement {
           && html`
             <a href=${`/users/${this.author.name}`}>${this.author.name}</a>
           `}
-        ${this.twaat.parent
+        ${this.item.parent
           && html`
             <i>comment</i>
           `}
-
-        <app-twaats-content .content=${this.twaat.content}></app-twaats-content>
+        ${this.item.content
+          && html`
+            <app-twaats-content .content=${this.item.content}></app-twaats-content>
+          `}
         ${this.child
           && html`
-            <i>retwaat</i><br />
-            <p>${this.child.content}</p>
-            <i>end retwaat</i><br />
+            <div class="retwaat">
+              <app-twaats-content .content=${this.child.content}></app-twaats-content>
+            </div>
           `}
-        <div class="small">${this.twaat.createdAt.toDate().toLocaleString()}</div>
-        <button @click=${() => this.onUpdate('like')}>${this.twaat.like} likes!</button>
-        <button @click=${this.onRetwaat}>${this.twaat.retwaats} retwaats!</button>
+        ${this.item.createdAt
+          && html`
+            <div class="small">${this.item.createdAt.toDate().toLocaleString()}</div>
+          `}
+        <button @click=${() => this.onUpdate('like')}>${this.item.like} likes!</button>
+        <button @click=${this.onRetwaat}>${this.item.retwaats} retwaats!</button>
         <button @click=${this.onDelete}>Delete</button>
-        <app-twaat-comment .parent=${this.twaat.id} />
+        <app-twaat-comment .parent=${this.item.id} />
       </div>
     `;
   }
