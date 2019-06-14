@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
 
 class Comment extends LitElement {
@@ -14,6 +14,13 @@ class Comment extends LitElement {
       parent: String,
     };
   }
+
+  static get styles() {
+    return css`
+      .add-comment {
+        outline:none;
+      }`;
+  }  
 
   firstUpdated() {
     this.twaatInput = (e) => {
@@ -41,6 +48,7 @@ class Comment extends LitElement {
         <label for="content">Twaat :</label>
         <input
           type="text"
+          class="add-comment"
           placeholder="Commentez le twaat..."
           .value="${this.content}"
           @input=${this.twaatInput}

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import { fireauth } from '../db';
 import './twaat/input';
 import './twaat/list';
@@ -15,6 +15,189 @@ class Twax extends LitElement {
     return {
       user: Object,
     };
+  }
+
+  static get styles() {
+  	return css `
+  		body {
+		     margin: 0px;
+		     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+		}
+		 .active {
+		     border-bottom: 2px solid rgb(29, 161, 242);
+		}
+		 .active svg {
+		     fill: rgba(29, 161, 242, 1.00);
+		}
+		 .active svg:hover {
+		     fill: rgba(29, 161, 242, 1.00);
+		}
+		 svg {
+		     fill: rgb(101, 119, 134);
+		}
+		 svg:hover {
+		     fill: rgba(29, 161, 242, 1.00);
+		}
+		 .haut {
+		     height: 2.2rem;
+		     padding: 0px 30px;
+		}
+		 .username {
+		     font-weight: 800;
+		     font-size: 18px color: rgb(20, 23, 26);
+		}
+		 .separator {
+		     height: 1px;
+		     background-color: rgba(0, 0, 0, 0.3);
+		}
+		 nav {
+		     max-height: 16vh;
+		     height: 3.2rem;
+		     flex-direction: row;
+		     width: 100%;
+		     flex-shrink: 0;
+		     margin-bottom: 0px;
+		     margin-left: 0px;
+		     margin-right: 0px;
+		     margin-top: 0px;
+		     min-height: 0px;
+		     min-width: 0px;
+		     padding-bottom: 0px;
+		     padding-left: 0px;
+		     padding-right: 0px;
+		     padding-top: 0px;
+		     position: relative;
+		     z-index: 0;
+		     flex-basis: auto;
+		     display: -webkit-flex;
+		     align-items: stretch;
+		     border: 0 solid black;
+		     box-sizing: border-box;
+		     background-color: white;
+		}
+		 .css-4rbku5 {
+		     -webkit-box-pack: center;
+		     justify-content: center;
+		     border-bottom-width: 2px;
+		     -webkit-box-align: center;
+		     align-items: center;
+		     outline-style: none;
+		     -webkit-box-flex: 1;
+		     flex-grow: 1;
+		     -webkit-box-direction: normal;
+		     -webkit-box-orient: vertical;
+		     flex-direction: column;
+		     display: flex;
+		     flex-shrink: 0;
+		     margin-bottom: 0px;
+		     margin-left: 0px;
+		     margin-right: 0px;
+		     margin-top: 0px;
+		     min-height: 0px;
+		     min-width: 0px;
+		     padding-bottom: 0px;
+		     padding-left: 0px;
+		     padding-right: 0px;
+		     padding-top: 0px;
+		     position: relative;
+		     z-index: 0;
+		}
+		 .css-1dbjc4n:hover {
+		     margin-top: -0px;
+		     border-radius: 999px;
+		     background-color: rgba(29, 161, 242, 0.1);
+		     padding: 8px;
+		     margin: -8px;
+		}
+		 svg {
+		     height: 1.75rem;
+		}
+		 .tweet {
+		     -webkit-box-direction: normal;
+		     -webkit-box-orient: horizontal;
+		     flex-direction: row;
+		     margin-left: -5px;
+		     margin-right: -5px;
+		     display: flex;
+		}
+		 .left {
+		     max-width: 46px;
+		     min-width:0px;
+		     flex-basis: 0px;
+		     -webkit-box-flex: 1;
+		     flex-grow: 1;
+		     margin-left: 5px;
+		     margin-right: 5px;
+		}
+		 img {
+		     max-width: 100%;
+		     border-radius:999px
+		}
+		 .right {
+		     -webkit-box-flex: 7;
+		     flex-grow: 7;
+		     flex-basis: 0px;
+		     -webkit-box-flex: 1;
+		     flex-grow: 1;
+		     margin-left: 5px;
+		     margin-right: 5px;
+		}
+		 article {
+		     padding-bottom: 1rem;
+		     padding-top: 1rem;
+		     padding-left: 9px;
+		     padding-right: 9px;
+		}
+		 .content-tweet {
+		     -webkit-box-direction: normal;
+		     -webkit-box-orient: horizontal;
+		     flex-direction: row;
+		     margin-left: -5px;
+		     margin-right: -5px;
+		}
+		 .tweet-image {
+		     max-width: 46px;
+		     flex-basis: 0px;
+		     -webkit-box-flex: 1;
+		     flex-grow: 1;
+		     margin-left: 5px;
+		     margin-right: 5px;
+		}
+		 .tweet-text {
+		     -webkit-box-flex: 7;
+		     flex-grow: 7;
+		     min-width: 0px;
+		     flex-basis: 0px;
+		     margin-left: 5px;
+		     margin-right: 5px;
+		}
+		 article {
+		     border-bottom: 1px solid rgb(230, 236, 240);
+		     padding-bottom: 1rem;
+		     padding-top: 1rem;
+		     padding-left: 9px;
+		     padding-right: 9px;
+		}
+		 .article-tweet {
+		     display: block 
+		}
+		 .name {
+		     font-size: 14px;
+		     line-height: 1.3125;
+		     font-weight:bold;
+		     color: rgb(20, 23, 26);
+		     margin-bottom: 2px;
+		}
+		 .name .at {
+		     color: rgb(101, 119, 134);
+		     font-weight: 400;
+		}
+		 .content {
+		     color: rgb(20, 23, 26);
+		     line-height: 1.3125;
+		     font-size: 14px;
+		     font-weight:400;
+		}`;
   }
 
   firstUpdated() {
@@ -37,9 +220,81 @@ class Twax extends LitElement {
 
   render() {
     return html`
-      <h1>Twittax</h1>
-      ${this.auth}
-      <app-twaat-input></app-twaat-input>
+		<header>
+			<div>
+				<div class="haut">
+					<p class="username">Accueil, bonjour ${this.auth}</p>
+				</div>
+				<nav>
+					<a href="#" class="css-4rbku5 active">
+						<div class="css-1dbjc4n">
+							<div class="css-1dbjc4n-2">
+								<svg viewBox="0 0 24 24" class="r-13gxpu9">
+									<g>
+										<path d="M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z"></path>
+									</g>
+								</svg>
+								<div></div>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="css-4rbku5">
+						<div class="css-1dbjc4n">
+							<div class="css-1dbjc4n">
+								<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+									<g>
+										<path d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z"></path>
+									</g>
+								</svg>
+								<div></div>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="css-4rbku5">
+						<div class="css-1dbjc4n">
+							<div class="css-1dbjc4n">
+								<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+									<g>
+										<path d="M21.697 16.468c-.02-.016-2.14-1.64-2.103-6.03.02-2.532-.812-4.782-2.347-6.335C15.872 2.71 14.01 1.94 12.005 1.93h-.013c-2.004.01-3.866.78-5.242 2.174-1.534 1.553-2.368 3.802-2.346 6.334.037 4.33-2.02 5.967-2.102 6.03-.26.193-.366.53-.265.838.102.308.39.515.712.515h4.92c.102 2.31 1.997 4.16 4.33 4.16s4.226-1.85 4.327-4.16h4.922c.322 0 .61-.206.71-.514.103-.307-.003-.645-.263-.838zM12 20.478c-1.505 0-2.73-1.177-2.828-2.658h5.656c-.1 1.48-1.323 2.66-2.828 2.66zM4.38 16.32c.74-1.132 1.548-3.028 1.524-5.896-.018-2.16.644-3.982 1.913-5.267C8.91 4.05 10.397 3.437 12 3.43c1.603.008 3.087.62 4.18 1.728 1.27 1.285 1.933 3.106 1.915 5.267-.024 2.868.785 4.765 1.525 5.896H4.38z"></path>
+									</g>
+								</svg>
+								<div></div>
+							</div>
+						</div>
+					</a>
+					<a href="#" class="css-4rbku5">
+						<div class="css-1dbjc4n">
+							<div class="css-1dbjc4n">
+								<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
+									<g>
+										<path d="M19.25 3.018H4.75C3.233 3.018 2 4.252 2 5.77v12.495c0 1.518 1.233 2.753 2.75 2.753h14.5c1.517 0 2.75-1.235 2.75-2.753V5.77c0-1.518-1.233-2.752-2.75-2.752zm-14.5 1.5h14.5c.69 0 1.25.56 1.25 1.25v.714l-8.05 5.367c-.273.18-.626.182-.9-.002L3.5 6.482v-.714c0-.69.56-1.25 1.25-1.25zm14.5 14.998H4.75c-.69 0-1.25-.56-1.25-1.25V8.24l7.24 4.83c.383.256.822.384 1.26.384.44 0 .877-.128 1.26-.383l7.24-4.83v10.022c0 .69-.56 1.25-1.25 1.25z"></path>
+									</g>
+								</svg>
+								<div ></div>
+							</div>
+						</div>
+					</a>
+				</nav>
+				<div class="separator"></div>
+			</div>
+		</header>
+				
+		<div class="article-tweet">
+		<article>
+			<div class="tweet">
+				<div class="left">
+					<img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
+				</div>
+				<div class="right">
+					<div class="content">
+						 <app-twaat-input></app-twaat-input> 
+					</div>
+					<div class="buttons"></div>
+				</div>
+			</div>
+		</article>
+		</div>
+     
       <app-twaat-list></app-twaat-list>
     `;
   }

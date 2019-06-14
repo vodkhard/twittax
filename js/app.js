@@ -1,5 +1,6 @@
 import { Router } from '@vaadin/router';
-import 'milligram/dist/milligram.min.css';
+// import 'milligram/dist/milligram.min.css';
+import '../assets/style.css'
 import './components/twittax';
 import './components/profile';
 import './components/tags';

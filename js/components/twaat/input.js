@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
 
 class Input extends LitElement {
@@ -13,6 +13,25 @@ class Input extends LitElement {
       handleSubmit: Function,
     };
   }
+
+  static get styles() {
+    return css`
+      .new-tweet {
+        outline:none;
+        border-radius: 8px;
+        border: 1px solid rgb(29, 161, 242);
+        resize: none;
+        font-size: 15px;
+        color: color: rgb(20, 23, 26);
+        padding: 8px;
+        width: 100%;
+        max-width: 550px;
+        height: 50px;
+      }
+      .new-tweet::placeholder { 
+        color: #aaa;
+      } `;
+  }  
 
   firstUpdated() {
     this.twaatInput = (e) => {
@@ -38,10 +57,9 @@ class Input extends LitElement {
   render() {
     return html`
       <form @submit="${this.handleSubmit}">
-        <label for="content">Twaat :</label>
         <textarea
           name="content"
-          rows="5"
+          class="new-tweet"
           placeholder="Quoi de neuf ?"
           .value="${this.content}"
           @input=${this.twaatInput}
