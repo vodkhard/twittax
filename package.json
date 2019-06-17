@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx parcel index.html",
-    "build": "npx parcel build index.html"
+    "build": "npx parcel build index.html",
+    "lint": "npx eslint --fix ./js/"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
