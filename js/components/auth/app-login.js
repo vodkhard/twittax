@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -16,6 +16,46 @@ class AppLogin extends LitElement {
     };
   }
 
+    static get styles() {
+    return css `
+      body {
+         margin: 0px;
+         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+      }
+      h2 {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 18px;
+      }
+      button {
+        background-color: rgb(29, 161, 242);
+        color: white;
+        font-weight: bold;
+        padding: 10px 18px;
+        border-radius: 30px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 20px;
+        height: 180px;
+      }
+      input {
+        background-color: #f5f8fa;
+        border: none;
+        border-bottom: 2px solid #657786;
+        outline: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        border-radius:2px;
+      }`;
+  }
+
   handleForm(e) {
     e.preventDefault();
     if (!this.email || !this.password) return console.error('Email or password incorrect');
@@ -31,11 +71,11 @@ class AppLogin extends LitElement {
 
   render() {
     return html`
-      <h2>Login :</h2>
+      <h2>Se connecter</h2>
       <form @submit="${this.handleForm}">
         <input
           type="email"
-          placeholder="Email"
+          placeholder="E-mail"
           .value="${this.email}"
           @input="${e => (this.email = e.target.value)}"
         />
@@ -45,7 +85,7 @@ class AppLogin extends LitElement {
           .value="${this.password}"
           @input="${e => (this.password = e.target.value)}"
         />
-        <button type="submit">Login</button>
+        <button type="submit">Se connecter</button>
       </form>
     `;
   }

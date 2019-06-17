@@ -17,8 +17,36 @@ class Comment extends LitElement {
 
   static get styles() {
     return css`
-      .add-comment {
+      input {
         outline:none;
+        border-radius: 8px;
+        border: 1px solid rgb(29, 161, 242);
+        resize: none;
+        font-size: 14px;
+        color: rgb(20, 23, 26);
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 550px;
+        margin-bottom: 4px;
+      }
+      input::placeholder { 
+        color: #aaa;
+      } 
+      button {
+        background-color: rgb(29, 161, 242);
+        color: white;
+        font-weight: bold;
+        padding: 6px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }
+      form {
+        margin-top: 10px;
+        transition: 0.2s;
       }`;
   }  
 
@@ -45,15 +73,14 @@ class Comment extends LitElement {
   render() {
     return html`
       <form @submit="${this.handleSubmit}">
-        <label for="content">Twaat :</label>
         <input
           type="text"
-          class="add-comment"
-          placeholder="Commentez le twaat..."
+          placeholder="Répondre..."
           .value="${this.content}"
           @input=${this.twaatInput}
         />
-        <button type="submit">Comment!</button>
+        <br>
+        <button type="submit">Twaat</button>
       </form>
     `;
   }

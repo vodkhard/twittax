@@ -16,21 +16,33 @@ class Input extends LitElement {
 
   static get styles() {
     return css`
-      .new-tweet {
+      textarea {
         outline:none;
         border-radius: 8px;
         border: 1px solid rgb(29, 161, 242);
         resize: none;
         font-size: 15px;
-        color: color: rgb(20, 23, 26);
+        color: rgb(20, 23, 26);
         padding: 8px;
+        box-sizing: border-box;
         width: 100%;
         max-width: 550px;
-        height: 50px;
+        height: 55px;
       }
-      .new-tweet::placeholder { 
+      textarea::placeholder { 
         color: #aaa;
-      } `;
+      } 
+      button {
+        background-color: rgb(29, 161, 242);
+        color: white;
+        font-weight: bold;
+        padding: 6px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }`;
   }  
 
   firstUpdated() {
@@ -59,12 +71,12 @@ class Input extends LitElement {
       <form @submit="${this.handleSubmit}">
         <textarea
           name="content"
-          class="new-tweet"
           placeholder="Quoi de neuf ?"
           .value="${this.content}"
           @input=${this.twaatInput}
         ></textarea>
-        <button type="submit">Twaat!</button>
+        <br>
+        <button type="submit">Twaat</button>
       </form>
     `;
   }
