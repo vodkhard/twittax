@@ -16,19 +16,15 @@ class AppLogin extends LitElement {
     };
   }
 
-    static get styles() {
-    return css `
-      body {
-         margin: 0px;
-         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
-      }
+  static get styles() {
+    return css`
       h2 {
         margin-top: 50px;
         text-align: center;
         font-size: 18px;
       }
       button {
-        background-color: rgb(29, 161, 242);
+        background-color: #1DA1F2;
         color: white;
         font-weight: bold;
         padding: 10px 18px;

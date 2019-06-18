@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import { LitElement, html, css } from 'lit-element';
 import { fireauth } from '../db';
 import './twaat/input';
@@ -18,190 +19,169 @@ class Twax extends LitElement {
   }
 
   static get styles() {
-  	return css `
-  		body {
-		     margin: 0px;
-		     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+    return css`
+        .active {
+            border-bottom: 2px solid #1DA1F2;
+        }
+        .active svg {
+            fill: rgba(29, 161, 242, 1.00);
+        }
+        .active svg:hover {
+            fill: rgba(29, 161, 242, 1.00);
+        }
+        svg {
+            fill: rgb(101, 119, 134);
+        }
+        svg:hover {
+            fill: rgba(29, 161, 242, 1.00);
+        }
+        .haut {
+            height: 2.2rem;
+            padding: 0px 25px;
+        }
+        .username {
+            font-weight: 800;
+            font-size: 18px;
+            color: rgb(20, 23, 26);
+        }
+        .separator {
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        nav {
+            max-height: 16vh;
+            height: 3.2rem;
+            flex-direction: row;
+            width: 100%;
+            flex-shrink: 0;
+            margin: 0px;
+			min-height: 0px;
+			min-width: 0px;
+			padding: 0px;
+			position: relative;
+			z-index: 0;
+			flex-basis: auto;
+			display: flex;
+			align-items: stretch;
+			border: 0 solid black;
+			box-sizing: border-box;
+			background-color: white;
 		}
-		 .active {
-		     border-bottom: 2px solid rgb(29, 161, 242);
-		}
-		 .active svg {
-		     fill: rgba(29, 161, 242, 1.00);
-		}
-		 .active svg:hover {
-		     fill: rgba(29, 161, 242, 1.00);
-		}
-		 svg {
-		     fill: rgb(101, 119, 134);
-		}
-		 svg:hover {
-		     fill: rgba(29, 161, 242, 1.00);
-		}
-		 .haut {
-		     height: 2.2rem;
-		     padding: 0px 25px;
-		}
-		 .username {
-		     font-weight: 800;
-		     font-size: 18px;
-		     color: rgb(20, 23, 26);
-		}
-		 .separator {
-		     height: 1px;
-		     background-color: rgba(0, 0, 0, 0.3);
-		}
-		 nav {
-		     max-height: 16vh;
-		     height: 3.2rem;
-		     flex-direction: row;
-		     width: 100%;
-		     flex-shrink: 0;
-		     margin-bottom: 0px;
-		     margin-left: 0px;
-		     margin-right: 0px;
-		     margin-top: 0px;
-		     min-height: 0px;
-		     min-width: 0px;
-		     padding-bottom: 0px;
-		     padding-left: 0px;
-		     padding-right: 0px;
-		     padding-top: 0px;
-		     position: relative;
-		     z-index: 0;
-		     flex-basis: auto;
-		     display: -webkit-flex;
-		     align-items: stretch;
-		     border: 0 solid black;
-		     box-sizing: border-box;
-		     background-color: white;
-		}
-		 .css-4rbku5 {
-		     -webkit-box-pack: center;
-		     justify-content: center;
-		     border-bottom-width: 2px;
-		     -webkit-box-align: center;
-		     align-items: center;
-		     outline-style: none;
-		     -webkit-box-flex: 1;
-		     flex-grow: 1;
-		     -webkit-box-direction: normal;
-		     -webkit-box-orient: vertical;
-		     flex-direction: column;
-		     display: flex;
-		     flex-shrink: 0;
-		     margin-bottom: 0px;
-		     margin-left: 0px;
-		     margin-right: 0px;
-		     margin-top: 0px;
-		     min-height: 0px;
-		     min-width: 0px;
-		     padding-bottom: 0px;
-		     padding-left: 0px;
-		     padding-right: 0px;
-		     padding-top: 0px;
-		     position: relative;
-		     z-index: 0;
-		}
-		    .css-1dbjc4n {
-	      transition: 0.1s
+		.tab {
+			box-pack: center;
+			justify-content: center;
+			border-bottom-width: 2px;
+			box-align: center;
+			align-items: center;
+			outline-style: none;
+			box-flex: 1;
+			flex-grow: 1;
+			box-direction: normal;
+			box-orient: vertical;
+			flex-direction: column;
+			display: flex;
+			flex-shrink: 0;
+			margin: 0px;
+			min-height: 0px;
+			min-width: 0px;
+			padding: 0px;
+			position: relative;
+			z-index: 0;
 	    }
-		 .css-1dbjc4n:hover {
-		     margin-top: -0px;
-		     border-radius: 999px;
-		     background-color: rgba(29, 161, 242, 0.1);
-		     padding: 8px;
-		     margin: -8px;
-		}
-		 svg {
-		     height: 1.75rem;
-		}
-		 .tweet {
-		     -webkit-box-direction: normal;
-		     -webkit-box-orient: horizontal;
-		     flex-direction: row;
-		     margin-left: -5px;
-		     margin-right: -5px;
-		     display: flex;
-		}
-		 .left {
-		     max-width: 46px;
-		     min-width:0px;
-		     flex-basis: 0px;
-		     -webkit-box-flex: 1;
-		     flex-grow: 1;
-		     margin-left: 5px;
-		     margin-right: 5px;
-		}
-		img {
-		     max-width: 100%;
-		     border-radius: 999px;
-		     pointer-events: none;
-		}
-		 .right {
-		     -webkit-box-flex: 7;
-		     flex-grow: 7;
-		     flex-basis: 0px;
-		     -webkit-box-flex: 1;
-		     flex-grow: 1;
-		     margin-left: 5px;
-		     margin-right: 5px;
-		}
-		 article {
-		     padding-bottom: 1rem;
-		     padding-top: 1rem;
-		     padding-left: 9px;
-		     padding-right: 9px;
-		}
-		 .content-tweet {
-		     -webkit-box-direction: normal;
-		     -webkit-box-orient: horizontal;
-		     flex-direction: row;
-		     margin-left: -5px;
-		     margin-right: -5px;
-		}
-		 .tweet-image {
-		     max-width: 46px;
-		     flex-basis: 0px;
-		     -webkit-box-flex: 1;
-		     flex-grow: 1;
-		     margin-left: 5px;
-		     margin-right: 5px;
-		}
-		 .tweet-text {
-		     -webkit-box-flex: 7;
-		     flex-grow: 7;
-		     min-width: 0px;
-		     flex-basis: 0px;
-		     margin-left: 5px;
-		     margin-right: 5px;
-		}
-		 article {
-		     border-bottom: 1px solid rgb(230, 236, 240);
-		     padding-bottom: 1rem;
-		     padding-top: 1rem;
-		     padding-left: 9px;
-		     padding-right: 9px;
-		}
-		 .article-tweet {
-		     display: block 
-		}
-		 .name {
-		     font-size: 14px;
-		     line-height: 1.3125;
-		     font-weight:bold;
-		     color: rgb(20, 23, 26);
-		     margin-bottom: 2px;
-		}
-		 .name .at {
-		     color: rgb(101, 119, 134);
-		     font-weight: 400;
-		}
-		 .content {
-		     color: rgb(20, 23, 26);
-		     line-height: 1.3125;
-		     font-size: 14px;
-		     font-weight:400;
+		.css-1dbjc4n {
+			transition: 0.1s
+	    }
+		.css-1dbjc4n:hover {
+			margin-top: -0px;
+			border-radius: 999px;
+			background-color: rgba(29, 161, 242, 0.1);
+			padding: 8px;
+			margin: -8px;
+	    }
+		svg {
+			height: 1.75rem;
+	    }
+		.tweet {
+			box-direction: normal;
+			box-orient: horizontal;
+			flex-direction: row;
+			margin-left: -5px;
+			margin-right: -5px;
+			display: flex;
+	    }
+		.left {
+			max-width: 46px;
+			min-width:0px;
+			flex-basis: 0px;
+			box-flex: 1;
+			flex-grow: 1;
+			margin-left: 5px;
+			margin-right: 5px;
+	    }
+	    img {
+			max-width: 100%;
+			border-radius: 999px;
+			pointer-events: none;
+	    }
+		.right {
+			box-flex: 7;
+			flex-grow: 7;
+			flex-basis: 0px;
+			box-flex: 1;
+			flex-grow: 1;
+			margin-left: 5px;
+			margin-right: 5px;
+	    }
+		article {
+			padding: 1rem 9px;
+
+	    }
+		.content-tweet {
+			box-direction: normal;
+			box-orient: horizontal;
+			flex-direction: row;
+			margin-left: -5px;
+			margin-right: -5px;
+	    }
+		.tweet-image {
+			max-width: 46px;
+			flex-basis: 0px;
+			box-flex: 1;
+			flex-grow: 1;
+			margin-left: 5px;
+			margin-right: 5px;
+	    }
+		.tweet-text {
+			box-flex: 7;
+			flex-grow: 7;
+			min-width: 0px;
+			flex-basis: 0px;
+			margin-left: 5px;
+			margin-right: 5px;
+	    }
+		article {
+			border-bottom: 1px solid rgb(230, 236, 240);
+			padding: 1rem 9px;
+	    }
+		.article-tweet {
+			display: block 
+	    }
+		.name {
+			font-size: 14px;
+			line-height: 1.3125;
+			font-weight: bold;
+			color: rgb(20, 23, 26);
+			margin-bottom: 2px;
+	    }
+		.name .at {
+			color: rgb(101, 119, 134);
+			font-weight: 400;
+	    }
+		.content {
+			color: rgb(20, 23, 26);
+			line-height: 1.3125;
+			font-size: 14px;
+			font-weight:400;
 		}`;
   }
 
@@ -211,34 +191,28 @@ class Twax extends LitElement {
     });
   }
 
-  get auth() {
-      return html`
-        ${this.user.displayName}
-      `;
-  }
-
   render() {
-  	if (this.user) {
-	    return html`
+    if (this.user) {
+      return html`
 			<header>
 				<div>
 					<div class="haut">
-						<p class="username">Accueil, bonjour ${this.auth}</p>
+						<p class="username">Accueil, bonjour ${this.user.displayName}</p>
 					</div>
 					<nav>
-						<a href="/" class="css-4rbku5 active">
+						<a href="/" class="tab active">
 							<div class="css-1dbjc4n">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-13gxpu9">
 										<g>
-											<path d="M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z"></path>
+										<path d="M22.46 7.57L12.357 2.115c-.223-.12-.49-.12-.713 0L1.543 7.57c-.364.197-.5.652-.303 1.017.135.25.394.393.66.393.12 0 .243-.03.356-.09l.815-.44L4.7 19.963c.214 1.215 1.308 2.062 2.658 2.062h9.282c1.352 0 2.445-.848 2.663-2.087l1.626-11.49.818.442c.364.193.82.06 1.017-.304.196-.363.06-.818-.304-1.016zm-4.638 12.133c-.107.606-.703.822-1.18.822H7.36c-.48 0-1.075-.216-1.178-.798L4.48 7.69 12 3.628l7.522 4.06-1.7 12.015z"></path><path d="M8.22 12.184c0 2.084 1.695 3.78 3.78 3.78s3.78-1.696 3.78-3.78-1.695-3.78-3.78-3.78-3.78 1.696-3.78 3.78zm6.06 0c0 1.258-1.022 2.28-2.28 2.28s-2.28-1.022-2.28-2.28 1.022-2.28 2.28-2.28 2.28 1.022 2.28 2.28z"></path>
 										</g>
 									</svg>
 									<div></div>
 								</div>
 							</div>
 						</a>
-						<a href="#" class="css-4rbku5">
+						<a href="#" class="tab">
 							<div class="css-1dbjc4n">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
@@ -250,7 +224,7 @@ class Twax extends LitElement {
 								</div>
 							</div>
 						</a>
-						<a href="#" class="css-4rbku5">
+						<a href="#" class="tab">
 							<div class="css-1dbjc4n">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
@@ -262,7 +236,7 @@ class Twax extends LitElement {
 								</div>
 							</div>
 						</a>
-						<a href="#" class="css-4rbku5">
+						<a href="#" class="tab">
 							<div class="css-1dbjc4n">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
@@ -297,9 +271,9 @@ class Twax extends LitElement {
 	     
 	      <app-twaat-list></app-twaat-list>
 	    `;
-	}
-	
-	return html`
+    }
+
+    return html`
       <app-auth></app-auth>
       <app-login></app-login>
     `;

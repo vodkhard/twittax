@@ -32,7 +32,7 @@ class List extends LitElement {
       ${repeat(
     this.twaats,
     ({ id }) => id,
-    (data) => html`
+    data => html`
           <app-twaat-item .item=${data}></app-twaat-item>
 
         `,

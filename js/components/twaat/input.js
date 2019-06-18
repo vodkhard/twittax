@@ -19,10 +19,10 @@ class Input extends LitElement {
       textarea {
         outline:none;
         border-radius: 8px;
-        border: 1px solid rgb(29, 161, 242);
+        border: 1px solid #1DA1F2;
         resize: none;
         font-size: 15px;
-        color: rgb(20, 23, 26);
+        color: #14171A;
         padding: 8px;
         box-sizing: border-box;
         width: 100%;
@@ -33,7 +33,7 @@ class Input extends LitElement {
         color: #aaa;
       } 
       button {
-        background-color: rgb(29, 161, 242);
+        background-color: #1DA1F2;
         color: white;
         font-weight: bold;
         padding: 6px 15px;
@@ -43,7 +43,7 @@ class Input extends LitElement {
         cursor: pointer;
         outline: none;
       }`;
-  }  
+  }
 
   firstUpdated() {
     this.twaatInput = (e) => {

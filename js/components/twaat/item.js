@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
-import twaatsRepository from '../../data/repositroy/twaats';
 import moment from 'moment';
-import 'moment/locale/en-gb'
+import twaatsRepository from '../../data/repositroy/twaats';
+import 'moment/locale/en-gb';
 import './comment';
 import './content';
 
@@ -27,8 +27,8 @@ class Item extends LitElement {
         font-size: 1rem;
       }
       .tweet {
-        -webkit-box-direction: normal;
-        -webkit-box-orient: horizontal;
+        box-direction: normal;
+        box-orient: horizontal;
         flex-direction: row;
         margin-left: -5px;
         margin-right: -5px;
@@ -38,7 +38,7 @@ class Item extends LitElement {
         max-width: 46px;
         min-width:0px;
         flex-basis: 0px;
-        -webkit-box-flex: 1;
+        box-flex: 1;
         flex-grow: 1;
         margin-left: 5px;
         margin-right: 5px;
@@ -49,23 +49,20 @@ class Item extends LitElement {
         pointer-events: none;
       }
       .right { 
-        -webkit-box-flex: 7;
+        box-flex: 7;
         flex-grow: 7;
         flex-basis: 0px;
-        -webkit-box-flex: 1;
+        box-flex: 1;
         flex-grow: 1;
         margin-left: 5px;
         margin-right: 5px;
       }
       article { 
-        padding-bottom: 1rem;
-        padding-top: 1rem;
-        padding-left: 9px;
-        padding-right: 9px;
+        padding: 1rem 9px;
       }
       .content-tweet { 
-        -webkit-box-direction: normal;
-        -webkit-box-orient: horizontal;
+        box-direction: normal;
+        box-orient: horizontal;
         flex-direction: row;
         margin-left: -5px;
         margin-right: -5px;
@@ -73,13 +70,13 @@ class Item extends LitElement {
       .tweet-image { 
         max-width: 46px;
         flex-basis: 0px;
-        -webkit-box-flex: 1;
+        box-flex: 1;
         flex-grow: 1;
         margin-left: 5px;
         margin-right: 5px;
       }
       .tweet-text { 
-        -webkit-box-flex: 7;
+        box-flex: 7;
         flex-grow: 7;
         min-width: 0px;
         flex-basis: 0px;
@@ -87,11 +84,8 @@ class Item extends LitElement {
         margin-right: 5px;
       }
       article { 
-        border-bottom: 1px solid rgb(230, 236, 240);
-        padding-bottom: 1rem;
-        padding-top: 1rem;
-        padding-left: 9px;
-        padding-right: 9px;
+        border-bottom: 1px solid #E6ECF0;
+        padding: 1rem 9px;
       }
       .article-tweet {
         display: block
@@ -100,27 +94,27 @@ class Item extends LitElement {
         font-size: 14px;
         line-height: 1.3125;
         font-weight:bold;
-        color: rgb(20, 23, 26);
+        color: #14171A;
         margin-bottom: 2px;
       }
       .name .at { 
-        color: rgb(101, 119, 134);
+        color: #657786;
         font-weight: 400;
       }
       .name .at a {
-        color: rgb(101, 119, 134);
+        color: #657786;
         font-weight: 400;
         text-decoration: none;
       }
       .content { 
-        color: rgb(20, 23, 26);
+        color: #14171A;
         line-height: 1.3125;
         font-size: 14.5px;
         font-weight:400;
       }
       .retweet {
-        -webkit-box-direction: normal;
-        -webkit-box-orient: horizontal;
+        box-direction: normal;
+        box-orient: horizontal;
         flex-direction: row;
         margin-left: -5px;
         margin-right: -5px;
@@ -128,19 +122,19 @@ class Item extends LitElement {
       }
       .icone {
         max-width: 49px;
-        -webkit-box-align: end;
+        box-align: end;
         align-items: flex-end;
         min-width: 0px;
         flex-basis: 0px;
-        -webkit-box-flex: 1;
+        box-flex: 1;
         flex-grow: 1;
         margin-left: 5px;
         margin-right: 3px;
       }
       svg {
         width: 12px;
-        color: rgb(101, 119, 134);
-        fill: rgb(101, 119, 134);
+        color: #657786;
+        fill: #657786;
         vertical-align: text-bottom;
         position: relative;
         height: 1.35em;
@@ -148,11 +142,11 @@ class Item extends LitElement {
         float: right;
       }
       .text {
-        -webkit-box-flex: 7;
+        box-flex: 7;
         flex-grow: 7;
         min-width: 0px;
         flex-basis: 0px;
-        -webkit-box-align: start;
+        box-align: start;
         align-items: flex-start;
         margin-left: 2px;
         margin-right: 5px;
@@ -162,48 +156,48 @@ class Item extends LitElement {
         font-size: 14px;
         min-width: 0px;
         line-height: 1.3125;
-        color: rgb(101, 119, 134);
+        color: #657786;
         box-sizing: border-box;
         display: inline;
       }
       .buttons {
         display: flex;
         max-width: 425px;
-        -webkit-box-direction: normal;
-        -webkit-box-orient: horizontal;
+        box-direction: normal;
+        box-orient: horizontal;
         flex-direction: row;
         margin-top:10px;
-        -webkit-box-pack: justify;
+        box-pack: justify;
         justify-content: space-between;
       }
       .button {
-        -webkit-box-pack: start;
+        box-pack: start;
         justify-content: flex-start;
         flex-basis: 0px;
-        -webkit-box-flex: 1;
+        box-flex: 1;
         flex-grow: 1;
-        -webkit-box-direction: normal;
-        -webkit-box-orient: horizontal;
+        box-direction: normal;
+        box-orient: horizontal;
         flex-direction: row;
       }
       .button-svg:hover {
          margin-top: -0px;
          border-radius: 999px;
-         background-color: rgba(29, 161, 242, 0.1);
+         background-color: #1DA1F2;
          padding: 8px;
          margin: -8px;
       }
       .button-svg svg:hover {
-        fill: rgb(29, 161, 242);
+        fill: #1DA1F2;
       }
       .button-svg {
         font-size: 15px;
-        -webkit-box-pack: start;
+        box-pack: start;
         justify-content: flex-start;
         min-width: 0px;
         line-height: 1.3125;
-        color: rgb(101, 119, 134);
-        -webkit-box-align: center;
+        color: #657786;
+        box-align: center;
         align-items: center;
         display: inline-flex;
         cursor: pointer;
@@ -224,7 +218,7 @@ class Item extends LitElement {
       .count span {
         position: relative;
         margin-left: 10px;
-        color: rgb(101, 119, 134);
+        color: #657786;
         min-width: 0px;
         font-size: 15px;
       }
@@ -256,8 +250,8 @@ class Item extends LitElement {
       twaatsRepository.del(this.item.id);
     };
     this.onComment = () => {
-      console.log('TODO: toggle le form pour commenter')
-    }
+      console.log('TODO: toggle le form pour commenter');
+    };
   }
 
   render() {
@@ -274,7 +268,7 @@ class Item extends LitElement {
             <span>retweeté</span>
           </div>
         </div>`
-      }
+}
 
       ${this.item.parent
             && html`
@@ -286,7 +280,7 @@ class Item extends LitElement {
             <span>répondu</span>
           </div>
         </div>`
-      }
+}
 
       <div class="tweet">
         <div class="left">

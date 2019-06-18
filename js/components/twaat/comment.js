@@ -20,10 +20,10 @@ class Comment extends LitElement {
       input {
         outline:none;
         border-radius: 8px;
-        border: 1px solid rgb(29, 161, 242);
+        border: 1px solid #1DA1F2;
         resize: none;
         font-size: 14px;
-        color: rgb(20, 23, 26);
+        color: #14171A;
         padding: 8px;
         box-sizing: border-box;
         width: 100%;
@@ -34,7 +34,7 @@ class Comment extends LitElement {
         color: #aaa;
       } 
       button {
-        background-color: rgb(29, 161, 242);
+        background-color: #1DA1F2;
         color: white;
         font-weight: bold;
         padding: 6px 15px;
@@ -48,7 +48,7 @@ class Comment extends LitElement {
         margin-top: 10px;
         transition: 0.2s;
       }`;
-  }  
+  }
 
   firstUpdated() {
     this.twaatInput = (e) => {
