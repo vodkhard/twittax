@@ -183,7 +183,7 @@ class Item extends LitElement {
       .button-svg:hover {
          margin-top: -0px;
          border-radius: 999px;
-         background-color: #1DA1F2;
+         background-color: rgba(29, 161, 242, 0.1);
          padding: 8px;
          margin: -8px;
       }
