@@ -88,10 +88,10 @@ class Twax extends LitElement {
 			position: relative;
 			z-index: 0;
 	    }
-		.css-1dbjc4n {
+		.tab-button {
 			transition: 0.1s
 	    }
-		.css-1dbjc4n:hover {
+		.tab-button:hover {
 			margin-top: -0px;
 			border-radius: 999px;
 			background-color: rgba(29, 161, 242, 0.1);
@@ -201,7 +201,7 @@ class Twax extends LitElement {
 					</div>
 					<nav>
 						<a href="/" class="tab active">
-							<div class="css-1dbjc4n">
+							<div class="tab-button">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-13gxpu9">
 										<g>
@@ -213,7 +213,7 @@ class Twax extends LitElement {
 							</div>
 						</a>
 						<a href="#" class="tab">
-							<div class="css-1dbjc4n">
+							<div class="tab-button">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
 										<g>
@@ -225,7 +225,7 @@ class Twax extends LitElement {
 							</div>
 						</a>
 						<a href="#" class="tab">
-							<div class="css-1dbjc4n">
+							<div class="tab-button">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
 										<g>
@@ -237,7 +237,7 @@ class Twax extends LitElement {
 							</div>
 						</a>
 						<a href="#" class="tab">
-							<div class="css-1dbjc4n">
+							<div class="tab-button">
 								<div>
 									<svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
 										<g>

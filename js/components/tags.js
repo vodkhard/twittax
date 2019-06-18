@@ -15,86 +15,86 @@ class Profile extends LitElement {
 
   static get styles() {
     return css`
-     .active {
-         border-bottom: 2px solid #1DA1F2;
-     }
-     .active svg {
-         fill: #1DA1F2;
+    .active {
+      border-bottom: 2px solid #1DA1F2;
     }
-     .active svg:hover {
-         fill: #1DA1F2;
+    .active svg {
+      fill: rgba(29, 161, 242, 1.00);
     }
-     svg {
-         fill: #657786;
+    .active svg:hover {
+      fill: rgba(29, 161, 242, 1.00);
     }
-     svg:hover {
-         fill: #1DA1F2;
+    svg {
+      fill: rgb(101, 119, 134);
     }
-     .haut {
-         height: 2.2rem;
-         padding: 0px 25px;
+    svg:hover {
+      fill: rgba(29, 161, 242, 1.00);
     }
-     .username {
-         font-weight: 800;
-         font-size: 18px;
-         color: #14171A;
+    .haut {
+      height: 2.2rem;
+      padding: 0px 25px;
     }
-     .separator {
-         height: 1px;
-         background-color: rgba(0, 0, 0, 0.3);
+    .username {
+      font-weight: 800;
+      font-size: 18px;
+      color: #14171A;
     }
-     nav {
-         max-height: 16vh;
-         height: 3.2rem;
-         flex-direction: row;
-         width: 100%;
-         flex-shrink: 0;
-         margin: 0px;
-         min-height: 0px;
-         min-width: 0px;
-         padding: 0px;
-         position: relative;
-         z-index: 0;
-         flex-basis: auto;
-         display: flex;
-         align-items: stretch;
-         border: 0 solid black;
-         box-sizing: border-box;
-         background-color: white;
+    .separator {
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    nav {
+      max-height: 16vh;
+      height: 3.2rem;
+      flex-direction: row;
+      width: 100%;
+      flex-shrink: 0;
+      margin: 0px;
+      min-height: 0px;
+      min-width: 0px;
+      padding: 0px;
+      position: relative;
+      z-index: 0;
+      flex-basis: auto;
+      display: flex;
+      align-items: stretch;
+      border: 0 solid black;
+      box-sizing: border-box;
+      background-color: white;
     }
      .tab {
-         box-pack: center;
-         justify-content: center;
-         border-bottom-width: 2px;
-         box-align: center;
-         align-items: center;
-         outline-style: none;
-         box-flex: 1;
-         flex-grow: 1;
-         box-direction: normal;
-         box-orient: vertical;
-         flex-direction: column;
-         display: flex;
-         flex-shrink: 0;
-         margin: 0px;
-         min-height: 0px;
-         min-width: 0px;
-         padding: 0px;
-         position: relative;
-         z-index: 0;
+      box-pack: center;
+      justify-content: center;
+      border-bottom-width: 2px;
+      box-align: center;
+      align-items: center;
+      outline-style: none;
+      box-flex: 1;
+      flex-grow: 1;
+      box-direction: normal;
+      box-orient: vertical;
+      flex-direction: column;
+      display: flex;
+      flex-shrink: 0;
+      margin: 0px;
+      min-height: 0px;
+      min-width: 0px;
+      padding: 0px;
+      position: relative;
+      z-index: 0;
     }
-    .css-1dbjc4n {
+    .tab-button {
       transition: 0.1s
     }
-     .css-1dbjc4n:hover {
-         margin-top: -0px;
-         border-radius: 999px;
-         background-color: #1DA1F2;
-         padding: 8px;
-         margin: -8px;
+    .tab-button:hover {
+      margin-top: -0px;
+      border-radius: 999px;
+      background-color: rgba(29, 161, 242, 0.1);
+      padding: 8px;
+      margin: -8px;
     }
-     svg {
-         height: 1.75rem;
+    svg {
+      height: 1.75rem;
     }`;
   }
 
@@ -111,7 +111,7 @@ class Profile extends LitElement {
         </div>
         <nav>
           <a href="/" class="tab">
-            <div class="css-1dbjc4n">
+            <div class="tab-button">
               <div>
                 <svg viewBox="0 0 24 24" class="r-13gxpu9">
                   <g>
@@ -123,7 +123,7 @@ class Profile extends LitElement {
             </div>
           </a>
           <a href="#" class="tab active">
-            <div class="css-1dbjc4n">
+            <div class="tab-button">
               <div>
                 <svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
                   <g>
@@ -135,7 +135,7 @@ class Profile extends LitElement {
             </div>
           </a>
           <a href="#" class="tab">
-            <div class="css-1dbjc4n">
+            <div class="tab-button">
               <div>
                 <svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
                   <g>
@@ -147,7 +147,7 @@ class Profile extends LitElement {
             </div>
           </a>
           <a href="#" class="tab">
-            <div class="css-1dbjc4n">
+            <div class="tab-button">
               <div>
                 <svg viewBox="0 0 24 24" class="r-1re7ezh r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr">
                   <g>
