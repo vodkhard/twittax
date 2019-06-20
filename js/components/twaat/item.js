@@ -222,6 +222,36 @@ class Item extends LitElement {
         min-width: 0px;
         font-size: 15px;
       }
+      .tooltip{
+        display: inline;
+        position: relative;
+        cursor: pointer;
+      }
+      .tooltip:hover:after{
+        font-size: 12px;
+        font-weight: 300;
+        background: #333;
+        background: rgba(0,0,0,1);
+        border-radius: 4px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(time);
+        left: -25%;
+        padding: 8px 10px;
+        position: absolute;
+        z-index: 98;
+        white-space: pre;
+      }
+      .tooltip:hover:before{
+        border: solid;
+        border-color: #333 transparent;
+        border-width: 6px 6px 0 6px;
+        bottom: 20px;
+        content: "";
+        left: 50%;
+        position: absolute;
+        z-index: 99;
+      }
     `;
   }
 
@@ -296,7 +326,7 @@ class Item extends LitElement {
             <a href=${`/users/${this.author.name}`}>${this.author.name}</a>
           `} · ${this.item.createdAt
           && html`
-            <span>${moment(this.item.createdAt.toDate()).fromNow()}</span>
+            <span class="tooltip" time="${moment(this.item.createdAt.toDate()).format("h:mm - D MMMM Y").toLowerCase()}">${moment(this.item.createdAt.toDate()).fromNow()}</span>
           `}</span> 
         </div>
         <div class="content">
