@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
-export class Icon extends LitElement {
+class Icon extends LitElement {
   constructor() {
     super();
     this.icon = null;
@@ -14,26 +14,10 @@ export class Icon extends LitElement {
 
   static get styles() {
     return css`
-      .icon {
-        max-width: 49px;
-        box-align: end;
-        align-items: flex-end;
-        min-width: 0px;
-        flex-basis: 0px;
-        box-flex: 1;
-        flex-grow: 1;
-        margin-left: 5px;
-        margin-right: 3px;
-      }
       svg {
-        width: 12px;
-        color: #657786;
-        fill: #657786;
-        vertical-align: text-bottom;
-        position: relative;
+        width: 1.25em;
         height: 1.35em;
-        display: inline-block;
-        float: right;
+        fill: #657786;
       }
     `;
   }
@@ -83,7 +67,7 @@ export class Icon extends LitElement {
         svg = null;
     }
 
-    return html`<div class="icon">${svg}</div>`;
+    return html`${svg}`;
   }
 }
 
