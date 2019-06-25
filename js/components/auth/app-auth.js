@@ -87,19 +87,19 @@ class AppAuth extends LitElement {
           type="text"
           placeholder="@"
           .value="${this.username}"
-          @input="${e => (this.username = e.target.value)}"
+          @input="${(e) => { this.username = e.target.value; }}"
         />
         <input
           type="email"
           placeholder="E-mail"
           .value="${this.email}"
-          @input="${e => (this.email = e.target.value)}"
+          @input="${(e) => { this.email = e.target.value; }}"
         />
         <input
           type="password"
           placeholder="Password"
           .value="${this.password}"
-          @input="${e => (this.password = e.target.value)}"
+          @input="${(e) => { this.password = e.target.value; }}"
         />
         <button type="submit">S'inscrire</button>
       </form>

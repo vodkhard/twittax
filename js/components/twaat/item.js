@@ -1,8 +1,9 @@
 import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import twaatsRepository from '../../data/repositroy/twaats';
+import { fireauth } from '../../db';
 import { colors } from '../ui/variables';
+import twaatsRepository from '../../data/repository/twaats';
 import './comment';
 import './content';
 import '../ui/button';
@@ -17,6 +18,7 @@ class Item extends LitElement {
     this.item = {};
     this.author = null;
     this.child = null;
+    this.authUser = fireauth.currentUser;
   }
 
   static get properties() {
@@ -24,6 +26,7 @@ class Item extends LitElement {
       item: Object,
       author: Object,
       child: Object,
+      authUser: Object,
     };
   }
 
@@ -176,7 +179,8 @@ class Item extends LitElement {
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
               <app-button icon="like" @click=${this.onLike}>${this.item.like}</app-button>
-              <app-button icon="delete" @click=${this.onDelete}></app-button>
+              ${this.item.author.id === this.authUser.uid
+    ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : html``}
             </div>
 
             <app-twaat-comment .parent=${this.item.id} />

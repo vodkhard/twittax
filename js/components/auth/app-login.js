@@ -73,13 +73,13 @@ class AppLogin extends LitElement {
           type="email"
           placeholder="E-mail"
           .value="${this.email}"
-          @input="${e => (this.email = e.target.value)}"
+          @input="${(e) => { this.email = e.target.value; }}"
         />
         <input
           type="password"
           placeholder="Password"
           .value="${this.password}"
-          @input="${e => (this.password = e.target.value)}"
+          @input="${(e) => { this.password = e.target.value; }}"
         />
         <button type="submit">Se connecter</button>
       </form>
