@@ -17,7 +17,7 @@ class Button extends LitElement {
       button {
         display: flex;
         border: 0;
-        background-color: #fff;
+        background-color: transparent;
         cursor: pointer;
       }
       app-icon {

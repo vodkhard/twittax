@@ -76,14 +76,15 @@ class Item extends LitElement {
       .at a {
         text-decoration: none;
       }
-      .text {
-        color: ${grey};
-      }
       .button-container {
         display: flex;
         justify-content: space-between;
         margin-top: 10px;
         max-width: 425px;
+      }
+      app-button {
+        color: ${grey};
+        font-weight: normal;
       }
     `;
   }
