@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-import { repeat } from 'lit-html/directives/repeat.js';
+import { repeat } from 'lit-html/directives/repeat';
 import '../../data/app-store';
 import './item';
 
@@ -29,14 +29,7 @@ class List extends LitElement {
         .conditions=${this.conditions}
         @child-changed=${this.twaatsChanged}
       ></app-store>
-      ${repeat(
-    this.twaats,
-    ({ id }) => id,
-    data => html`
-          <app-twaat-item .item=${data}></app-twaat-item>
-
-        `,
-  )}
+      ${repeat(this.twaats, ({ id }) => id, data => html`<app-twaat-item .item=${data}></app-twaat-item>`)}
     `;
   }
 }

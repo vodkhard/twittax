@@ -18,7 +18,7 @@ class Item extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
+      item: Object,
       author: Object,
       child: Object,
     };
