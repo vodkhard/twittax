@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 
 class Input extends LitElement {
   constructor() {
@@ -16,25 +17,29 @@ class Input extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+      }
       textarea {
         outline:none;
         border-radius: 8px;
-        border: 1px solid #1DA1F2;
+        border: 1px solid ${colors.blue};
         resize: none;
-        font-size: 15px;
-        color: #14171A;
+        font-size: 14px;
+        color: ${colors.black};
         padding: 8px;
         box-sizing: border-box;
         width: 100%;
         max-width: 550px;
         height: 55px;
+        margin-bottom: 5px;
       }
       textarea::placeholder { 
         color: #aaa;
-      } 
+      }
       button {
-        background-color: #1DA1F2;
-        color: white;
+        background-color: ${colors.blue};
+        color: #fff;
         font-weight: bold;
         padding: 6px 15px;
         border-radius: 30px;

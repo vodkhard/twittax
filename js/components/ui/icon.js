@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { colors } from './variables';
 
 class Icon extends LitElement {
   constructor() {
@@ -17,7 +18,10 @@ class Icon extends LitElement {
       svg {
         width: 1.25em;
         height: 1.35em;
-        fill: #657786;
+        fill: ${colors.grey};
+      }
+      svg:hover {
+        fill: ${colors.blue};
       }
     `;
   }

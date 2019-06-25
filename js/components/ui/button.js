@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { colors } from './variables';
 
 class Button extends LitElement {
   constructor() {
@@ -19,6 +20,9 @@ class Button extends LitElement {
         border: 0;
         background-color: transparent;
         cursor: pointer;
+      }
+      button:hover {
+        color: ${colors.blue};
       }
       app-icon {
         margin-right: 5px;

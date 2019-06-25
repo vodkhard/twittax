@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { colors } from '../ui/variables';
 
 class Content extends LitElement {
   constructor() {
@@ -15,7 +16,7 @@ class Content extends LitElement {
   static get styles() {
     return css`
       .link {
-        color: rgba(29,161,242,1.00);
+        color: ${colors.blue};
         text-decoration: none;
       }`;
   }

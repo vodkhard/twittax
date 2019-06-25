@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 
 class Comment extends LitElement {
   constructor() {
@@ -17,25 +18,27 @@ class Comment extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+      }
       input {
         outline:none;
         border-radius: 8px;
-        border: 1px solid #1DA1F2;
-        resize: none;
+        border: 1px solid ${colors.blue};
         font-size: 14px;
-        color: #14171A;
+        color: ${colors.black};
         padding: 8px;
         box-sizing: border-box;
         width: 100%;
         max-width: 550px;
-        margin-bottom: 4px;
+        margin-bottom: 5px;
       }
       input::placeholder { 
         color: #aaa;
       } 
       button {
-        background-color: #1DA1F2;
-        color: white;
+        background-color: ${colors.blue};
+        color: #fff;
         font-weight: bold;
         padding: 6px 15px;
         border-radius: 30px;
@@ -43,10 +46,6 @@ class Comment extends LitElement {
         border: none;
         cursor: pointer;
         outline: none;
-      }
-      form {
-        margin-top: 10px;
-        transition: 0.2s;
       }`;
   }
 

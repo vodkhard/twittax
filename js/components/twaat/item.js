@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 import './comment';
 import './content';
 import '../ui/button';
@@ -27,20 +28,17 @@ class Item extends LitElement {
   }
 
   static get styles() {
-    const grey = css`#657786`;
-    const black = css`#14171a`;
-
     return css`
       :host {
         display: block;
         border-bottom: 1px solid #e6ecf0;
-        color: ${black};
+        color: ${colors.black};
       }
       .small {
         font-size: 14px;
       }
       .grey {
-        color: ${grey};
+        color: ${colors.grey};
       }
       .container {
         display: flex;
@@ -67,14 +65,15 @@ class Item extends LitElement {
         padding: 1rem 9px;
       }
       .name {
-        font-weight: bold;
         margin-bottom: 2px;
       }
-      .at {
-        font-weight: normal;
-      }
-      .at a {
+      .name a {
+        color: ${colors.black};
+        font-weight: bold;
         text-decoration: none;
+      }
+      .name a:hover {
+        color: ${colors.blue};
       }
       .button-container {
         display: flex;
@@ -83,8 +82,11 @@ class Item extends LitElement {
         max-width: 425px;
       }
       app-button {
-        color: ${grey};
+        color: ${colors.grey};
         font-weight: normal;
+      }
+      app-twaat-comment {
+        margin-top: 10px;
       }
     `;
   }
@@ -143,10 +145,13 @@ class Item extends LitElement {
           </div>
           <div class="right">
             <div class="name small">
-              ${this.author && html`${this.author.name.slice(1)}`}
+              ${this.author && html`
+                <app-tooltip .tooltip=${this.author.name}>
+                  <a href=${`/users/${this.author.name}`}>${this.author.name.slice(1)}</a>
+                </app-tooltip>
+              `}
+              -
               <span class="at grey">
-                ${this.author && html`<a class="grey" href=${`/users/${this.author.name}`}>${this.author.name}</a>`}
-                ·
                 ${this.item.createdAt
                   && html`
                     <app-tooltip
@@ -167,8 +172,8 @@ class Item extends LitElement {
                   <app-twaats-content .content=${this.child.content}></app-twaats-content>
                 `}
             </div>
-            <div class="button-container">
-                <app-button icon="comment" @click=${this.onComment}>0</app-button>
+            <div class="button-container grey">
+              <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
               <app-button icon="like" @click=${this.onLike}>${this.item.like}</app-button>
               <app-button icon="delete" @click=${this.onDelete}></app-button>
