@@ -20,7 +20,7 @@ class Profile extends LitElement {
 
   render() {
     return html`
-      <app-header</app-header>
+      <app-header></app-header>
       ${this.tag
     ? html`<app-twaat-list .conditions=${[['tags', 'array-contains', this.tag]]} />`
     : html`<div>Fetching trending twaats...</div>`}
