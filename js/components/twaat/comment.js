@@ -1,5 +1,6 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 
 class Comment extends LitElement {
   constructor() {
@@ -13,6 +14,39 @@ class Comment extends LitElement {
       handleSubmit: Function,
       parent: String,
     };
+  }
+
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      input {
+        outline:none;
+        border-radius: 8px;
+        border: 1px solid ${colors.blue};
+        font-size: 14px;
+        color: ${colors.black};
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 550px;
+        margin-bottom: 5px;
+      }
+      input::placeholder { 
+        color: #aaa;
+      } 
+      button {
+        background-color: ${colors.blue};
+        color: #fff;
+        font-weight: bold;
+        padding: 6px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }`;
   }
 
   firstUpdated() {
@@ -38,14 +72,14 @@ class Comment extends LitElement {
   render() {
     return html`
       <form @submit="${this.handleSubmit}">
-        <label for="content">Twaat :</label>
         <input
           type="text"
-          placeholder="Commentez le twaat..."
+          placeholder="Répondre..."
           .value="${this.content}"
           @input=${this.twaatInput}
         />
-        <button type="submit">Comment!</button>
+        <br>
+        <button type="submit">Twaat</button>
       </form>
     `;
   }

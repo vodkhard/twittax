@@ -1,5 +1,6 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 
 class Input extends LitElement {
   constructor() {
@@ -12,6 +13,41 @@ class Input extends LitElement {
       content: String,
       handleSubmit: Function,
     };
+  }
+
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      textarea {
+        outline:none;
+        border-radius: 8px;
+        border: 1px solid ${colors.blue};
+        resize: none;
+        font-size: 14px;
+        color: ${colors.black};
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 550px;
+        height: 55px;
+        margin-bottom: 5px;
+      }
+      textarea::placeholder { 
+        color: #aaa;
+      }
+      button {
+        background-color: ${colors.blue};
+        color: #fff;
+        font-weight: bold;
+        padding: 6px 15px;
+        border-radius: 30px;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }`;
   }
 
   firstUpdated() {
@@ -38,15 +74,14 @@ class Input extends LitElement {
   render() {
     return html`
       <form @submit="${this.handleSubmit}">
-        <label for="content">Twaat :</label>
         <textarea
           name="content"
-          rows="5"
           placeholder="Quoi de neuf ?"
           .value="${this.content}"
           @input=${this.twaatInput}
         ></textarea>
-        <button type="submit">Twaat!</button>
+        <br>
+        <button type="submit">Twaat</button>
       </form>
     `;
   }

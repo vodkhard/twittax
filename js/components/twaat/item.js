@@ -1,7 +1,15 @@
 import { LitElement, html, css } from 'lit-element';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import twaatsRepository from '../../data/repositroy/twaats';
+import { colors } from '../ui/variables';
 import './comment';
 import './content';
+import '../ui/button';
+import '../ui/icon';
+import '../ui/tooltip';
+
+dayjs.extend(relativeTime);
 
 class Item extends LitElement {
   constructor() {
@@ -13,7 +21,7 @@ class Item extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
+      item: Object,
       author: Object,
       child: Object,
     };
@@ -21,11 +29,64 @@ class Item extends LitElement {
 
   static get styles() {
     return css`
-      .small {
-        font-size: 1rem;
+      :host {
+        display: block;
+        border-bottom: 1px solid #e6ecf0;
+        color: ${colors.black};
       }
-      .retwaat {
-        border: 1px solid red;
+      .small {
+        font-size: 14px;
+      }
+      .grey {
+        color: ${colors.grey};
+      }
+      .container {
+        display: flex;
+      }
+      .container > div {
+        margin: 0 5px;
+      }
+      .left {
+        max-width: 46px;
+        width: 100%;
+      }
+      .right {
+        flex-grow: 1;
+      }
+      .header .left {
+        text-align: right;
+      }
+      img {
+        max-width: 100%;
+        border-radius: 999px;
+        pointer-events: none;
+      }
+      article {
+        padding: 1rem 9px;
+      }
+      .name {
+        margin-bottom: 2px;
+      }
+      .name a {
+        color: ${colors.black};
+        font-weight: bold;
+        text-decoration: none;
+      }
+      .name a:hover {
+        color: ${colors.blue};
+      }
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        max-width: 425px;
+      }
+      app-button {
+        color: ${colors.grey};
+        font-weight: normal;
+      }
+      app-twaat-comment {
+        margin-top: 10px;
       }
     `;
   }
@@ -51,41 +112,77 @@ class Item extends LitElement {
         });
       });
     };
+    this.onLike = () => {
+      this.onUpdate('like');
+    };
     this.onDelete = () => {
       twaatsRepository.del(this.item.id);
+    };
+    this.onComment = () => {
+      console.log('TODO: toggle le form pour commenter');
     };
   }
 
   render() {
-    return html`
-      <div>
-        ${this.author
-          && html`
-            <a href=${`/users/${this.author.name}`}>${this.author.name}</a>
-          `}
-        ${this.item.parent
-          && html`
-            <i>comment</i>
-          `}
-        ${this.item.content
-          && html`
-            <app-twaats-content .content=${this.item.content}></app-twaats-content>
-          `}
-        ${this.child
-          && html`
-            <div class="retwaat">
-              <app-twaats-content .content=${this.child.content}></app-twaats-content>
-            </div>
-          `}
-        ${this.item.createdAt
-          && html`
-            <div class="small">${this.item.createdAt.toDate().toLocaleString()}</div>
-          `}
-        <button @click=${() => this.onUpdate('like')}>${this.item.like} likes!</button>
-        <button @click=${this.onRetwaat}>${this.item.retwaats} retwaats!</button>
-        <button @click=${this.onDelete}>Delete</button>
-        <app-twaat-comment .parent=${this.item.id} />
+    const header = (this.child || this.item.parent) && html`
+      <div class="container header small">
+        <div class="left">
+          <app-icon icon="retwaat"></app-icon>
+        </div>
+        <div class="right grey">
+          ${this.child && 'retwaaté'}
+          ${this.item.parent && 'répondu'}
+        </div>
       </div>
+    `;
+
+    return html`
+      <article>
+        ${header}
+        <div class="container">
+          <div class="left">
+            <img src="/assets/default_profile_400x400.png"/>
+          </div>
+          <div class="right">
+            <div class="name small">
+              ${this.author && html`
+                <app-tooltip .tooltip=${this.author.name}>
+                  <a href=${`/users/${this.author.name}`}>${this.author.name.slice(1)}</a>
+                </app-tooltip>
+              `}
+              -
+              <span class="at grey">
+                ${this.item.createdAt
+                  && html`
+                    <app-tooltip
+                      .tooltip=${dayjs(this.item.createdAt.toDate()).format('h:mm - D MMMM YYYY').toLowerCase()}
+                    >
+                      ${dayjs(this.item.createdAt.toDate()).fromNow()}
+                    </app-tooltip>
+                  `}
+                </span>
+            </div>
+            <div class="content">
+              ${this.item.content
+                && html`
+                  <app-twaats-content .content=${this.item.content}></app-twaats-content>
+                `}
+              ${this.child
+                && html`
+                  <app-twaats-content .content=${this.child.content}></app-twaats-content>
+                `}
+            </div>
+            <div class="button-container grey">
+              <app-button icon="comment" @click=${this.onComment}>0</app-button>
+              <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
+              <app-button icon="like" @click=${this.onLike}>${this.item.like}</app-button>
+              <app-button icon="delete" @click=${this.onDelete}></app-button>
+            </div>
+
+            <app-twaat-comment .parent=${this.item.id} />
+          </div>
+        </div>
+      </article>
     `;
   }
 }
