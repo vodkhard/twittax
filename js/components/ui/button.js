@@ -32,7 +32,7 @@ class Button extends LitElement {
 
   render() {
     return html`
-      <button type="button" @click=${() => this.dispatchEvent(new Event('click'))}>
+      <button type="button">
         <app-icon .icon=${this.icon}></app-icon>
         <div>
           <slot></slot>
