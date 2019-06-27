@@ -110,13 +110,21 @@ class Item extends LitElement {
       this.onUpdate('retwaats').then(() => {
         twaatsRepository.add({
           child: twaatsRepository.get(this.item.id),
-          like: 0,
+          laaks: [],
           retwaats: 0,
         });
       });
     };
-    this.onLike = () => {
-      this.onUpdate('like');
+    this.onLike = async () => {
+      try {
+        if(await twaatsRepository.hasUserLaaked(this.item.id)){
+          twaatsRepository.delLaaked(this.item.id);
+        }else{
+          twaatsRepository.addLaaked(this.item.id);
+        }
+      } catch(e) {
+        console.log(e);
+      }
     };
     this.onDelete = () => {
       twaatsRepository.del(this.item.id);
@@ -178,11 +186,9 @@ class Item extends LitElement {
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
-              <app-button icon="like" @click=${this.onLike}>${this.item.like}</app-button>
-              ${this.item.author.id === this.authUser.uid
-    ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : html``}
+              <app-button icon="like" @click=${this.onLike}>${Object.keys(this.item.laaks).length}</app-button>
+              <app-button icon="delete" @click=${this.onDelete}></app-button>
             </div>
-
             <app-twaat-comment .parent=${this.item.id} />
           </div>
         </div>

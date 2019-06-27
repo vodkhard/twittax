@@ -35,7 +35,7 @@ class Input extends LitElement {
         height: 55px;
         margin-bottom: 5px;
       }
-      textarea::placeholder { 
+      textarea::placeholder {
         color: #aaa;
       }
       button {
@@ -61,7 +61,7 @@ class Input extends LitElement {
       twaatsRepository
         .add({
           content: this.content,
-          like: 0,
+          laaks: [],
           retwaats: 0,
           tags: tags || [],
         })
