@@ -95,6 +95,7 @@ class Item extends LitElement {
   }
 
   async firstUpdated() {
+    this.item.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
@@ -119,8 +120,10 @@ class Item extends LitElement {
       try {
         if(await twaatsRepository.hasUserLaaked(this.item.id)){
           twaatsRepository.delLaaked(this.item.id);
+          this.item.userLiked = false;
         }else{
           twaatsRepository.addLaaked(this.item.id);
+          this.item.userLiked = true;
         }
       } catch(e) {
         console.log(e);
@@ -186,7 +189,7 @@ class Item extends LitElement {
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
-              <app-button icon="like" @click=${this.onLike}>${Object.keys(this.item.laaks).length}</app-button>
+              <app-button icon="${this.item.userLiked ? 'like-full' : 'like'}" @click=${this.onLike}>${Object.keys(this.item.laaks).length}</app-button>
               <app-button icon="delete" @click=${this.onDelete}></app-button>
             </div>
             <app-twaat-comment .parent=${this.item.id} />
