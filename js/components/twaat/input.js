@@ -54,7 +54,6 @@ class Input extends LitElement {
     this.twaatInput = (e) => {
       this.content = e.target.value;
     };
-
     this.handleSubmit = (e) => {
       e.preventDefault();
       const tags = [...this.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import subscribeNotification from '../../helpers/notifications';
 
 class AppLogin extends LitElement {
   constructor() {
@@ -62,6 +63,7 @@ class AppLogin extends LitElement {
         this.email = '';
         this.password = '';
       })
+      .then(() => subscribeNotification())
       .catch(console.error);
   }
 

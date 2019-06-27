@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "npx parcel index.html",
     "build": "npx parcel build index.html",
-    "lint": "npx eslint --fix ./js/"
+    "lint": "npx eslint --fix ./js/",
+    "generate": "npx workbox generateSW"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "workbox-cli": "^4.2.0"
   },
   "dependencies": {
     "@vaadin/router": "^1.2.0",
