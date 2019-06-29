@@ -5,11 +5,13 @@ class Button extends LitElement {
   constructor() {
     super();
     this.icon = null;
+    this.color = null;
   }
 
   static get properties() {
     return {
       icon: String,
+      color: String,
     };
   }
 
@@ -32,8 +34,13 @@ class Button extends LitElement {
 
   render() {
     return html`
+      <style>
+        button {
+          color: ${this.color}
+        }
+      </style>
       <button type="button">
-        <app-icon .icon=${this.icon}></app-icon>
+        <app-icon .icon=${this.icon} .color=${this.color}></app-icon>
         <div>
           <slot></slot>
         </div>

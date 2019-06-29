@@ -62,7 +62,7 @@ class Input extends LitElement {
         .add({
           content: this.content,
           laaks: [],
-          retwaats: 0,
+          retwaats: [],
           tags: tags || [],
         })
         .then(() => {

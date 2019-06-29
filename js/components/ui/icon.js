@@ -5,11 +5,13 @@ class Icon extends LitElement {
   constructor() {
     super();
     this.icon = null;
+    this.color = colors.grey;
   }
 
   static get properties() {
     return {
       icon: String,
+      color: String,
     };
   }
 
@@ -18,7 +20,6 @@ class Icon extends LitElement {
       svg {
         width: 1.25em;
         height: 1.35em;
-        fill: ${colors.grey};
       }
       svg:hover {
         fill: ${colors.blue};
@@ -112,7 +113,15 @@ class Icon extends LitElement {
         svg = null;
     }
 
-    return html`${svg}`;
+    return html`
+      <style>
+        svg {
+          fill: ${this.color};
+        }
+      </style>
+
+      ${svg}
+    `;
   }
 }
 
