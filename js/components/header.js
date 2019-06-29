@@ -66,7 +66,7 @@ class Header extends LitElement {
                 <app-icon icon="bell"></app-icon>
               </div>
             </a>
-            <a href="#" class="tab">
+            <a href="/settings" class="tab">
               <div class="tab-button">
                 <app-icon icon="user"></app-icon>
               </div>
