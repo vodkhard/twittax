@@ -43,13 +43,13 @@ const addLaak = id => firestore.collection(collection)
   .doc(id)
   .update({
     laaks: fieldValue.arrayUnion(id),
-});
+  });
 
 const delLaak = id => firestore.collection(collection)
   .doc(id)
   .update({
     laaks: fieldValue.arrayRemove(id),
-});
+  });
 
 export default {
   getByName,

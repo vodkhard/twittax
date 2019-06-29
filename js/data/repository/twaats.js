@@ -1,5 +1,6 @@
 import { firestore, fireauth, fieldValue } from '../../db';
-const collection = "twaats";
+
+const collection = 'twaats';
 
 const get = id => firestore.collection('twaats').doc(id);
 
@@ -36,9 +37,8 @@ const delLaaked = async id => firestore.collection(collection)
 
 const hasUserLaaked = id => firestore.collection(collection)
   .doc(id)
-  .get().then(twaat =>
-    twaat.data().laaks.find(
-      value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid))
+  .get().then(twaat => twaat.data().laaks.find(
+    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
   ));
 
 const addRetwaat = id => firestore.collection(collection)
@@ -47,18 +47,16 @@ const addRetwaat = id => firestore.collection(collection)
     retwaats: fieldValue.arrayUnion(firestore.collection('users').doc(fireauth.currentUser.uid)),
   });
 
-const delRetwaat = child =>
-  child
+const unretwaat = child => child
   .update({
     retwaats: fieldValue.arrayRemove(firestore.collection('users').doc(fireauth.currentUser.uid)),
   });
 
 const hasUserRetwaat = id => firestore.collection(collection)
   .doc(id)
-  .get().then(twaat =>
-    twaat.data().retwaats.find(
-      value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid))
-  ) ||false);
+  .get().then(twaat => twaat.data().retwaats.find(
+    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  ) || false);
 
 export default {
   get,
@@ -69,6 +67,6 @@ export default {
   delLaaked,
   hasUserLaaked,
   addRetwaat,
-  delRetwaat,
-  hasUserRetwaat
+  unretwaat,
+  hasUserRetwaat,
 };

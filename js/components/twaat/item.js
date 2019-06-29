@@ -9,7 +9,6 @@ import './content';
 import '../ui/button';
 import '../ui/icon';
 import '../ui/tooltip';
-import { fireauth, firestore } from '../../db';
 
 dayjs.extend(relativeTime);
 
@@ -20,7 +19,7 @@ class Item extends LitElement {
     this.author = null;
     this.child = null;
     this.userLiked = false;
-    this.userRetwaat = false;
+    this.userRetwaated = false;
   }
 
   static get properties() {
@@ -29,7 +28,7 @@ class Item extends LitElement {
       author: Object,
       child: Object,
       userLiked: Boolean,
-      userRetwaat: Boolean,
+      userRetwaated: Boolean,
     };
   }
 
@@ -87,9 +86,6 @@ class Item extends LitElement {
         margin-top: 10px;
         max-width: 425px;
       }
-      .is-retwaatax app-icon > svg {
-        fill: #17bf63 !important;
-      }
       app-button {
         color: ${colors.grey};
         font-weight: normal;
@@ -102,55 +98,56 @@ class Item extends LitElement {
 
   async firstUpdated() {
     this.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
-    this.userRetwaat = await twaatsRepository.hasUserRetwaat(this.item.id);
+    this.userRetwaated = await twaatsRepository.hasUserRetwaat(this.item.id);
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
     if (this.item.child) {
       this.item.child.get().then((doc) => {
         this.child = doc.data();
-      })
+      });
     }
     this.onUpdate = type => twaatsRepository.update(this.item.id, {
       [type]: this.item[type] + 1,
     });
     this.onRetwaat = async () => {
       try {
-        console.log(await twaatsRepository.hasUserRetwaat(this.item.id));
-        if(await twaatsRepository.hasUserRetwaat(this.item.id) === false){
+        if (await twaatsRepository.hasUserRetwaat(this.item.id) === false) {
           twaatsRepository.addRetwaat(this.item.id);
           twaatsRepository.add({
             child: twaatsRepository.get(this.item.id),
             laaks: [],
             retwaats: [],
           });
-          this.userRetwaat = true;
+          this.userRetwaated = true;
         }
-      } catch(e) {
-        console.log(e);
+        return true;
+      } catch (e) {
+        return e;
       }
     };
     this.onLike = async () => {
       try {
-        if(await twaatsRepository.hasUserLaaked(this.item.id)){
+        if (await twaatsRepository.hasUserLaaked(this.item.id)) {
           twaatsRepository.delLaaked(this.item.id);
           this.userLiked = false;
-        }else{
+        } else {
           twaatsRepository.addLaaked(this.item.id);
           this.userLiked = true;
         }
-      } catch(e) {
-        console.log(e);
+        return true;
+      } catch (e) {
+        return e;
       }
     };
     this.onDelete = () => {
-      if(this.item.child){
-        twaatsRepository.delRetwaat(this.item.child);
+      if (this.item.child) {
+        twaatsRepository.unretwaat(this.item.child);
       }
       twaatsRepository.del(this.item.id);
     };
     this.onComment = () => {
-      console.log('TODO: toggle le form pour commenter');
+      //TODO: toggle le form pour commenter
     };
   }
 
@@ -205,15 +202,15 @@ class Item extends LitElement {
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button
-                .color=${ this.userRetwaat ? '#17bf63' : '' }
+                .color=${this.userRetwaated ? '#17bf63' : null}
                 icon="retwaat"
                 @click=${this.onRetwaat}
-              >${Object.keys(this.item.retwaats).length}</app-button>
+              >${this.item.retwaats.length}</app-button>
               <app-button
-                .icon=${ this.userLiked ? 'like-full' : 'like' }
-                .color=${ this.userLiked ? 'red' : '' }
+                .icon=${this.userLiked ? 'like-full' : 'like'}
+                .color=${this.userLiked ? 'red' : null}
                 @click=${this.onLike}
-              >${Object.keys(this.item.laaks).length}</app-button>
+              >${this.item.laaks.length}</app-button>
               <app-button icon="delete" @click=${this.onDelete}></app-button>
             </div>
             <app-twaat-comment .parent=${this.item.id} />
