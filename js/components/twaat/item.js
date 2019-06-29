@@ -19,7 +19,8 @@ class Item extends LitElement {
     this.item = {};
     this.author = null;
     this.child = null;
-    this.authUser = fireauth.currentUser;
+    this.userLiked = false;
+    this.userRetwaat = false;
   }
 
   static get properties() {
@@ -27,7 +28,8 @@ class Item extends LitElement {
       item: Object,
       author: Object,
       child: Object,
-      authUser: Object,
+      userLiked: Boolean,
+      userRetwaat: Boolean,
     };
   }
 
@@ -99,8 +101,8 @@ class Item extends LitElement {
   }
 
   async firstUpdated() {
-    this.item.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
-    this.item.userRetwaat = await twaatsRepository.hasUserRetwaat(this.item.id);
+    this.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
+    this.userRetwaat = await twaatsRepository.hasUserRetwaat(this.item.id);
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
@@ -122,7 +124,7 @@ class Item extends LitElement {
             laaks: [],
             retwaats: [],
           });
-          this.item.userRetwaat = true;
+          this.userRetwaat = true;
         }
       } catch(e) {
         console.log(e);
@@ -131,11 +133,11 @@ class Item extends LitElement {
     this.onLike = async () => {
       try {
         if(await twaatsRepository.hasUserLaaked(this.item.id)){
-          this.item.userLiked = false;
           twaatsRepository.delLaaked(this.item.id);
+          this.userLiked = false;
         }else{
-          this.item.userLiked = true;
           twaatsRepository.addLaaked(this.item.id);
+          this.userLiked = true;
         }
       } catch(e) {
         console.log(e);
@@ -164,7 +166,6 @@ class Item extends LitElement {
         </div>
       </div>
     `;
-
     return html`
       <article>
         ${header}
@@ -204,13 +205,13 @@ class Item extends LitElement {
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
               <app-button
-                .color="${ this.item.userRetwaat ? '#17bf63' : '' }"
+                .color=${ this.userRetwaat ? '#17bf63' : '' }
                 icon="retwaat"
                 @click=${this.onRetwaat}
               >${Object.keys(this.item.retwaats).length}</app-button>
               <app-button
-                .icon="${ this.item.userLiked ? 'like-full' : 'like' }"
-                .color=${ this.item.userLiked ? 'red' : '' }
+                .icon=${ this.userLiked ? 'like-full' : 'like' }
+                .color=${ this.userLiked ? 'red' : '' }
                 @click=${this.onLike}
               >${Object.keys(this.item.laaks).length}</app-button>
               <app-button icon="delete" @click=${this.onDelete}></app-button>

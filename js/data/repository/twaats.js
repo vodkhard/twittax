@@ -58,7 +58,7 @@ const hasUserRetwaat = id => firestore.collection(collection)
   .get().then(twaat =>
     twaat.data().retwaats.find(
       value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid))
-  ));
+  ) ||false);
 
 export default {
   get,
