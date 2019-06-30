@@ -14,11 +14,6 @@ class Settings extends LitElement {
     };
   }
 
-  firstUpdated() {
-    this.addEventListener('change', this.handleFileUploadChange);
-    this.addEventListener('click', this.handleFileUploadSubmit);
-  }
-
   handleFileUploadChange(e) {
     this.selectedFile = e.target.files[0];
   }
@@ -28,20 +23,18 @@ class Settings extends LitElement {
     const uploadTask = storageRef.child(`images/${this.selectedFile.name}`).put(this.selectedFile);
     uploadTask.on('state_changed', () => {
     }, (error) => {
-      console.log(error);
     }, () => {
       const user = fireauth.currentUser;
-      const profilImageRef = storageRef.child('images/cat.png');
+      const profilImageRef = storageRef.child(`images/${this.selectedFile.name}`);
       profilImageRef.getMetadata().then((metadata) => {
         user.updateProfile({
           photoURL: metadata.fullPath,
         }).then(() => {
           console.log('profil updated');
         }).catch((error) => {
-          console.log(error);
+
         });
       }).catch((error) => {
-        console.log(error);
       });
     });
   }

@@ -12,12 +12,13 @@ class Twax extends LitElement {
   constructor() {
     super();
     this.user = null;
-    this.image = '';
+    this.image = 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png';
   }
 
   static get properties() {
     return {
       user: Object,
+      image: String,
     };
   }
 
@@ -50,12 +51,11 @@ class Twax extends LitElement {
   firstUpdated() {
     fireauth.onAuthStateChanged((user) => {
       this.user = user;
-      const storageRef = firestorage.ref();
-      storageRef.child(user.photoURL).getDownloadURL().then((url) => {
+      firestorage.ref().child(user.photoURL).getDownloadURL().then((url) => {
         this.image = url;
-      }).catch((error) => {
-        console.log(error);
-      });
+      })
+        .catch((error) => {
+        });
     });
   }
 
