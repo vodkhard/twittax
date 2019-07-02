@@ -1,7 +1,7 @@
 import { Router } from '@vaadin/router';
-import './components/twittax';
-import './components/profile';
-import './components/tags';
+import './js/components/twittax';
+import './js/components/profile';
+import './js/components/tags';
 
 const router = new Router(document.getElementById('router'));
 router.setRoutes([

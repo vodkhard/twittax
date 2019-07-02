@@ -13,11 +13,11 @@
     <script>
       (() => {
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/sw.js')
-            .then(req => {
-              console.log('Registration Successful')
-            })
-            .catch(() => console.log('Service worker not supported use another cache method'))
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(() => console.log('Service Worker Registered Successful'))
+              .catch(() => console.log('Service worker not supported use another cache method'))
+          })
         }
       })();
     </script>
@@ -28,7 +28,7 @@
       <!-- <app-twittax></app-twittax> -->
       <div id="router"></div>
     </main>
-    <script src="./js/app.js"></script>
+    <script src="/js/app.js"></script>
     <script nomodule>
       const script = document.createElement('script');
       script.src = '/js/components/twittax.js';
