@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
 import { firestore, fireauth } from '../../db';
-import subscribeNotification from '../../helpers/notifications';
 
 class AppAuth extends LitElement {
   constructor() {
@@ -77,7 +76,6 @@ class AppAuth extends LitElement {
         this.email = '';
         this.password = '';
       })
-      .then(() => subscribeNotification())
       .catch(console.error);
   }
 
