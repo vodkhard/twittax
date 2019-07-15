@@ -10,3 +10,6 @@
 - `yarn install`
 - `yarn dev`
 - Go to `http://localhost:1234`
+
+- You can add in cache, use
+- `yarn gen`
