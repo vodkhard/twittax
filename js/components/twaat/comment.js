@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import twaatsRepository from '../../data/repositroy/twaats';
+import twaatsRepository from '../../data/repository/twaats';
 import { colors } from '../ui/variables';
 
 class Comment extends LitElement {

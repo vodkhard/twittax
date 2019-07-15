@@ -1,6 +1,7 @@
+
 import { LitElement, html, css } from 'lit-element';
-import twaatsRepository from '../../data/repositroy/twaats';
 import { colors } from '../ui/variables';
+import twaatsRepository from '../../data/repository/twaats';
 
 class Input extends LitElement {
   constructor() {
