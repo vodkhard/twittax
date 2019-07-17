@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 import { LitElement, html, css } from 'lit-element';
 import { fireauth } from '../db';
+import userRepository from '../data/repository/users';
 import './twaat/input';
 import './twaat/list';
 import './auth/app-auth';
@@ -10,7 +11,7 @@ import './header';
 class Twax extends LitElement {
   constructor() {
     super();
-    this.user = {};
+    this.user = null;
   }
 
   static get properties() {
@@ -64,7 +65,9 @@ class Twax extends LitElement {
           </div>
         </article>
 
-        <app-twaat-list></app-twaat-list>
+        <app-twaat-list 
+          .conditions=${[['subscribers', 'array-contains', userRepository.get(this.user.uid)]]}
+        ></app-twaat-list>
         `;
     }
 
