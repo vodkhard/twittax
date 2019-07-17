@@ -18,7 +18,8 @@ class Item extends LitElement {
     this.item = {};
     this.author = null;
     this.child = null;
-    this.authUser = fireauth.currentUser;
+    this.userLiked = false;
+    this.userRetwaated = false;
   }
 
   static get properties() {
@@ -26,7 +27,8 @@ class Item extends LitElement {
       item: Object,
       author: Object,
       child: Object,
-      authUser: Object,
+      userLiked: Boolean,
+      userRetwaated: Boolean,
     };
   }
 
@@ -95,6 +97,8 @@ class Item extends LitElement {
   }
 
   async firstUpdated() {
+    this.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
+    this.userRetwaated = await twaatsRepository.hasUserRetwaat(this.item.id);
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
@@ -106,23 +110,36 @@ class Item extends LitElement {
     this.onUpdate = type => twaatsRepository.update(this.item.id, {
       [type]: this.item[type] + 1,
     });
-    this.onRetwaat = () => {
-      this.onUpdate('retwaats').then(() => {
-        twaatsRepository.add({
-          child: twaatsRepository.get(this.item.id),
-          like: 0,
-          retwaats: 0,
-        });
-      });
+    this.onRetwaat = async () => {
+        if (await twaatsRepository.hasUserRetwaat(this.item.id) === false) {
+          twaatsRepository.addRetwaat(this.item.id);
+          twaatsRepository.add({
+            child: twaatsRepository.get(this.item.id),
+            laaks: [],
+            retwaats: [],
+          });
+          this.userRetwaated = true;
+        }
+        return true;
     };
-    this.onLike = () => {
-      this.onUpdate('like');
+    this.onLike = async () => {
+        if (await twaatsRepository.hasUserLaaked(this.item.id)) {
+          twaatsRepository.delLaaked(this.item.id);
+          this.userLiked = false;
+        } else {
+          twaatsRepository.addLaaked(this.item.id);
+          this.userLiked = true;
+        }
+        return true;
     };
     this.onDelete = () => {
+      if (this.item.child) {
+        twaatsRepository.unretwaat(this.item.child);
+      }
       twaatsRepository.del(this.item.id);
     };
     this.onComment = () => {
-      console.log('TODO: toggle le form pour commenter');
+      //TODO: toggle le form pour commenter
     };
   }
 
@@ -138,7 +155,6 @@ class Item extends LitElement {
         </div>
       </div>
     `;
-
     return html`
       <article>
         ${header}
@@ -177,12 +193,18 @@ class Item extends LitElement {
             </div>
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
-              <app-button icon="retwaat" @click=${this.onRetwaat}>${this.item.retwaats}</app-button>
-              <app-button icon="like" @click=${this.onLike}>${this.item.like}</app-button>
-              ${this.item.author.id === this.authUser.uid
-    ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : html``}
+              <app-button
+                .color=${this.userRetwaated ? '#17bf63' : null}
+                icon="retwaat"
+                @click=${this.onRetwaat}
+              >${this.item.retwaats.length}</app-button>
+              <app-button
+                .icon=${this.userLiked ? 'like-full' : 'like'}
+                .color=${this.userLiked ? 'red' : null}
+                @click=${this.onLike}
+              >${this.item.laaks.length || 0}</app-button>
+              <app-button icon="delete" @click=${this.onDelete}></app-button>
             </div>
-
             <app-twaat-comment .parent=${this.item.id} />
           </div>
         </div>
@@ -191,3 +213,4 @@ class Item extends LitElement {
   }
 }
 customElements.define('app-twaat-item', Item);
+

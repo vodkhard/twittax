@@ -79,6 +79,41 @@ const toggleFollow = (id, followed) => {
   return true;
 };
 
+const addLaaked = id => firestore.collection(collection)
+  .doc(id)
+  .update({
+    laaks: fieldValue.arrayUnion(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  });
+
+const delLaaked = async id => firestore.collection(collection)
+  .doc(id)
+  .update({
+    laaks: fieldValue.arrayRemove(await firestore.collection('users').doc(fireauth.currentUser.uid)),
+  });
+
+const hasUserLaaked = id => firestore.collection(collection)
+  .doc(id)
+  .get().then(twaat => twaat.data().laaks.find(
+    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  ));
+
+const addRetwaat = id => firestore.collection(collection)
+  .doc(id)
+  .update({
+    retwaats: fieldValue.arrayUnion(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  });
+
+const unretwaat = child => child
+  .update({
+    retwaats: fieldValue.arrayRemove(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  });
+
+const hasUserRetwaat = id => firestore.collection(collection)
+  .doc(id)
+  .get().then(twaat => twaat.data().retwaats.find(
+    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
+  ) || false);
+
 export default {
   getByName,
   get,
@@ -87,4 +122,10 @@ export default {
   del,
   isFollowing,
   toggleFollow,
+  addLaaked,
+  delLaaked,
+  hasUserLaaked,
+  addRetwaat,
+  unretwaat,
+  hasUserRetwaat,
 };
