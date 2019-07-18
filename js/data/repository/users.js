@@ -7,6 +7,19 @@ const getCurrentUser = () => firestore.collection(collection)
 
 const get = id => firestore.collection(collection).doc(id);
 
+const getFollowerIdByUserId = async id => firestore.collection(collection)
+  .doc(id).collection('followers')
+  .where('ref', '==', getCurrentUser())
+  .get()
+  .then((snapshot) => {
+    const { docs } = snapshot;
+    if (docs.length > 0) {
+      const item = docs[0];
+      return item.id;
+    }
+    return null;
+  });
+
 const getByName = name => firestore
   .collection(collection)
   .where('name', '==', name)
@@ -42,39 +55,20 @@ const del = id => firestore
   .doc(id)
   .delete();
 
-const addFollowed = id => getCurrentUser()
-  .update({
-    followed: fieldValue.arrayUnion(get(id)),
-  });
-
 const addFollower = id => firestore.collection(collection)
-  .doc(id)
-  .update({
-    followers: fieldValue.arrayUnion(getCurrentUser()),
+  .doc(id).collection('followers')
+  .add({
+    ref: getCurrentUser(),
+    created_at: fieldValue.serverTimestamp(),
   });
 
-const delFollowed = id => getCurrentUser()
-  .update({
-    followed: fieldValue.arrayRemove(get(id)),
-  });
-
-const delFollower = id => get(id)
-  .update({
-    followers: fieldValue.arrayRemove(getCurrentUser()),
-  });
-
-const isFollowing = id => new Promise((resolve, reject) => getCurrentUser().get()
-  .then((user) => {
-    resolve(user.data().followed.includes(id));
-  }).catch(err => reject(err)));
+const delFollower = async id => get(id).collection('followers').doc(await getFollowerIdByUserId(id)).delete();
 
 const toggleFollow = (id, followed) => {
   if (followed) {
-    delFollowed(id);
     delFollower(id);
     return false;
   }
-  addFollowed(id);
   addFollower(id);
   return true;
 };
@@ -120,7 +114,7 @@ export default {
   add,
   update,
   del,
-  isFollowing,
+  isFollowing: getFollowerIdByUserId,
   toggleFollow,
   addLaaked,
   delLaaked,

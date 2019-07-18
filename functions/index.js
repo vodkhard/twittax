@@ -5,12 +5,38 @@ admin.initializeApp();
 const db = admin.firestore();
 const fieldValue = admin.firestore.FieldValue;
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send('Hello from Firebase!');
-});
+exports.onFollow = functions.firestore
+  .document('/users/{userId}/followers/{followerId}')
+  .onCreate((snapshot, context) => {
+    const { userId } = context.params;
+    const currentUser = snapshot.data().ref;
+    return currentUser.collection('followed')
+      .add({
+        ref: db.collection('users').doc(userId),
+        created_at: fieldValue.serverTimestamp(),
+      });
+  });
+
+const getFolloweddByUserId = (id, currentUser) => currentUser.collection('followed')
+  .where('ref', '==', db.collection('users').doc(id))
+  .get()
+  .then((snapshot) => {
+    const { docs } = snapshot;
+    if (docs.length > 0) {
+      const item = docs[0];
+      return item.id;
+    }
+    return null;
+  });
+
+exports.onUnfollow = functions.firestore
+  .document('/users/{userId}/followers/{followerId}')
+  .onDelete(async (snapshot, context) => {
+    const { userId } = context.params;
+    const currentUser = snapshot.data().ref;
+    return currentUser.collection('followed').doc(await getFolloweddByUserId(userId, currentUser))
+      .delete();
+  });
 
 exports.addFeed = functions.firestore.document('/twaats/{twaatId}').onCreate(
   (snap) => {
