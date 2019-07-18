@@ -9,6 +9,7 @@ import './content';
 import '../ui/button';
 import '../ui/icon';
 import '../ui/tooltip';
+import { firestorage } from '../../db';
 
 dayjs.extend(relativeTime);
 
@@ -61,7 +62,7 @@ class Item extends LitElement {
       .header .left {
         text-align: right;
       }
-      img {
+      img.profile {
         max-width: 100%;
         border-radius: 999px;
         pointer-events: none;
@@ -110,35 +111,45 @@ class Item extends LitElement {
         this.child = doc.data();
       });
     }
-    this.onRetwaat = async () => {
-      if (await twaatsRepository.hasUserRetwaat(this.item.id) === false) {
-        twaatsRepository.addRetwaat(this.item.id);
-        twaatsRepository.add({
-          child: twaatsRepository.get(this.item.id),
-        });
-        this.userRetwaated = true;
-      }
-      return true;
-    };
-    this.onLike = async () => {
-      if (await twaatsRepository.hasUserLaaked(this.item.id)) {
-        twaatsRepository.delLaaked(this.item.id);
-        this.userLiked = false;
-      } else {
-        twaatsRepository.addLaaked(this.item.id);
-        this.userLiked = true;
-      }
-      return true;
-    };
-    this.onDelete = () => {
-      if (this.item.child) {
-        twaatsRepository.unretwaat(this.item.child);
-      }
-      twaatsRepository.del(this.item.id);
-    };
-    this.onComment = () => {
-      // TODO: toggle le form pour commenter
-    };
+    if (this.item.picture) {
+      firestorage.ref(this.item.picture).getDownloadURL().then((url) => {
+        this.twaatPicture = url;
+      });
+    }
+  }
+
+  async onLike() {
+    if (this.userLiked) {
+      twaatsRepository.delLaaked(this.item.id);
+      this.userLiked = false;
+    } else {
+      twaatsRepository.addLaaked(this.item.id);
+      this.userLiked = true;
+    }
+    return true;
+  }
+
+  onDelete() {
+    if (this.item.child) {
+      twaatsRepository.unretwaat(this.item.child);
+    }
+    twaatsRepository.del(this.item.id);
+  }
+
+  async onRetwaat() {
+    console.log(this.userRetwaated);
+    if (this.userRetwaated === false) {
+      twaatsRepository.addRetwaat(this.item.id);
+      twaatsRepository.add({
+        child: twaatsRepository.get(this.item.id),
+      });
+      this.userRetwaated = true;
+    }
+    return true;
+  }
+
+  onComment() {
+    // TODO: toggle le form pour commenter
   }
 
   render() {
@@ -158,7 +169,7 @@ class Item extends LitElement {
         ${header}
         <div class="container">
           <div class="left">
-            <img src="/assets/default_profile_400x400.png"/>
+            <img class="profile" src="/assets/default_profile_400x400.png"/>
           </div>
           <div class="right">
             <div class="name small">
@@ -188,6 +199,9 @@ class Item extends LitElement {
                 && html`
                   <app-twaats-content .content=${this.child.content}></app-twaats-content>
                 `}
+              ${this.twaatPicture && html`
+                <div><img src=${this.twaatPicture} alt="Twaat picture" /></div>
+              `}
             </div>
             <div class="button-container grey">
               <app-button icon="comment" @click=${this.onComment}>0</app-button>
