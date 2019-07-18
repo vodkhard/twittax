@@ -15,10 +15,18 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.addFeed = functions.firestore.document('/twaats/{twaatId}').onCreate(
   (snap) => {
     const twaatRef = snap.ref;
-    snap.data().author.get().then((authorRef) => {
+    const { author, parent } = snap.data();
+    if (parent) {
+      parent.get().then((parentRef) => {
+        twaatRef.update({
+          subscribers: fieldValue.arrayUnion(parentRef.data().author),
+        });
+      });
+    }
+    author.get().then((authorRef) => {
       const { followers } = authorRef.data();
       twaatRef.update({
-        subscribers: fieldValue.arrayUnion(snap.data().author, ...followers),
+        subscribers: fieldValue.arrayUnion(author, ...followers),
       });
     });
   },

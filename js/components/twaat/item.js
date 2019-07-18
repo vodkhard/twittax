@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { fireauth } from '../../db';
 import { colors } from '../ui/variables';
 import twaatsRepository from '../../data/repository/twaats';
 import './comment';
@@ -107,30 +106,25 @@ class Item extends LitElement {
         this.child = doc.data();
       });
     }
-    this.onUpdate = type => twaatsRepository.update(this.item.id, {
-      [type]: this.item[type] + 1,
-    });
     this.onRetwaat = async () => {
-        if (await twaatsRepository.hasUserRetwaat(this.item.id) === false) {
-          twaatsRepository.addRetwaat(this.item.id);
-          twaatsRepository.add({
-            child: twaatsRepository.get(this.item.id),
-            laaks: [],
-            retwaats: [],
-          });
-          this.userRetwaated = true;
-        }
-        return true;
+      if (await twaatsRepository.hasUserRetwaat(this.item.id) === false) {
+        twaatsRepository.addRetwaat(this.item.id);
+        twaatsRepository.add({
+          child: twaatsRepository.get(this.item.id),
+        });
+        this.userRetwaated = true;
+      }
+      return true;
     };
     this.onLike = async () => {
-        if (await twaatsRepository.hasUserLaaked(this.item.id)) {
-          twaatsRepository.delLaaked(this.item.id);
-          this.userLiked = false;
-        } else {
-          twaatsRepository.addLaaked(this.item.id);
-          this.userLiked = true;
-        }
-        return true;
+      if (await twaatsRepository.hasUserLaaked(this.item.id)) {
+        twaatsRepository.delLaaked(this.item.id);
+        this.userLiked = false;
+      } else {
+        twaatsRepository.addLaaked(this.item.id);
+        this.userLiked = true;
+      }
+      return true;
     };
     this.onDelete = () => {
       if (this.item.child) {
@@ -139,7 +133,7 @@ class Item extends LitElement {
       twaatsRepository.del(this.item.id);
     };
     this.onComment = () => {
-      //TODO: toggle le form pour commenter
+      // TODO: toggle le form pour commenter
     };
   }
 
@@ -213,4 +207,3 @@ class Item extends LitElement {
   }
 }
 customElements.define('app-twaat-item', Item);
-

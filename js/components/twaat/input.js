@@ -1,4 +1,3 @@
-
 import { LitElement, html, css } from 'lit-element';
 import { colors } from '../ui/variables';
 import twaatsRepository from '../../data/repository/twaats';
@@ -57,14 +56,8 @@ class Input extends LitElement {
     };
     this.handleSubmit = (e) => {
       e.preventDefault();
-      const tags = [...this.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);
       twaatsRepository
-        .add({
-          content: this.content,
-          laaks: [],
-          retwaats: [],
-          tags: tags || [],
-        })
+        .add({ content: this.content })
         .then(() => {
           this.content = '';
         });
