@@ -23,7 +23,6 @@ class List extends LitElement {
 
   render() {
     return html`
-
       <app-store
         collection="twaats"
         .conditions=${this.conditions}

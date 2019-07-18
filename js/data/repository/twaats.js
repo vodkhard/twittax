@@ -6,13 +6,15 @@ const get = id => firestore.collection(collection).doc(id);
 
 const add = (payload) => {
   const tags = [...payload.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);
+  const authorRef = firestore.collection('users').doc(fireauth.currentUser.uid);
 
   return firestore.collection(collection).add({
     ...payload,
     laaks: [],
     retwaats: [],
     tags: tags || [],
-    author: firestore.collection('users').doc(fireauth.currentUser.uid),
+    author: authorRef,
+    subscribers: [authorRef],
     createdAt: fieldValue.serverTimestamp(),
   });
 };
@@ -42,12 +44,6 @@ const delLaaked = async id => firestore.collection(collection)
     laaks: fieldValue.arrayRemove(await firestore.collection('users').doc(fireauth.currentUser.uid)),
   });
 
-const hasUserLaaked = id => firestore.collection(collection)
-  .doc(id)
-  .get().then(twaat => twaat.data().laaks.find(
-    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
-  ));
-
 const addRetwaat = id => firestore.collection(collection)
   .doc(id)
   .update({
@@ -59,12 +55,6 @@ const unretwaat = child => child
     retwaats: fieldValue.arrayRemove(firestore.collection('users').doc(fireauth.currentUser.uid)),
   });
 
-const hasUserRetwaat = id => firestore.collection(collection)
-  .doc(id)
-  .get().then(twaat => twaat.data().retwaats.find(
-    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
-  ) || false);
-
 export default {
   get,
   add,
@@ -72,8 +62,6 @@ export default {
   del,
   addLaaked,
   delLaaked,
-  hasUserLaaked,
   addRetwaat,
   unretwaat,
-  hasUserRetwaat,
 };

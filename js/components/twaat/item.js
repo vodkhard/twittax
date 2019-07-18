@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { colors } from '../ui/variables';
+import userRepository from '../../data/repository/users';
 import twaatsRepository from '../../data/repository/twaats';
 import './comment';
 import './content';
@@ -96,8 +97,11 @@ class Item extends LitElement {
   }
 
   async firstUpdated() {
-    this.userLiked = await twaatsRepository.hasUserLaaked(this.item.id);
-    this.userRetwaated = await twaatsRepository.hasUserRetwaat(this.item.id);
+    this.userLiked = this.item.laaks
+      .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
+    this.userRetwaated = this.item.retwaats
+      .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
+
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
