@@ -21,20 +21,15 @@ class Settings extends LitElement {
   handleFileUploadSubmit() {
     const storageRef = firestorage.ref();
     const uploadTask = storageRef.child(`images/${this.selectedFile.name}`).put(this.selectedFile);
-    uploadTask.on('state_changed', () => {
-    }, (error) => {
-    }, () => {
+    uploadTask.on('state_changed', () => {}, () => {}, () => {
       const user = fireauth.currentUser;
       const profilImageRef = storageRef.child(`images/${this.selectedFile.name}`);
       profilImageRef.getMetadata().then((metadata) => {
         user.updateProfile({
           photoURL: metadata.fullPath,
         }).then(() => {
-          console.log('profil updated');
-        }).catch((error) => {
-
+          window.location = '/';
         });
-      }).catch((error) => {
       });
     });
   }
@@ -42,12 +37,11 @@ class Settings extends LitElement {
 
   render() {
     return html`
-          <app-header></app-header>         
-          <div>
-            <input type="file" accept="image/*" @change="${this.handleFileUploadChange}"/>
-            <button @click="${this.handleFileUploadSubmit}">Valider</button>
-          </div>
-        `;
+      <div>
+        <input type="file" accept="image/*" @change="${this.handleFileUploadChange}"/>
+        <button @click="${this.handleFileUploadSubmit}">Valider</button>
+      </div>
+    `;
   }
 }
 customElements.define('app-twittax-settings', Settings);

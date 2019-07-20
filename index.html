@@ -13,6 +13,11 @@
     <script>
       (() => {
         if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(() => console.log('Service Worker Registered Successful'))
+              .catch(() => console.log('Service worker not supported use another cache method'))
+          })
         }
       })();
     </script>
