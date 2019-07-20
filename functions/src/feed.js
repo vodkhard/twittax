@@ -8,10 +8,9 @@ exports.addFeed = (snap, fieldValue) => {
       });
     });
   }
-  author.get().then((authorRef) => {
-    const { followers } = authorRef.data();
+  author.collection('followers').get().then(({ docs }) => {
     twaatRef.update({
-      subscribers: fieldValue.arrayUnion(author, ...followers),
+      subscribers: fieldValue.arrayUnion(...docs.map(d => d.data().ref)),
     });
   });
-}
+};

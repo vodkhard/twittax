@@ -2,14 +2,12 @@ import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { colors } from '../ui/variables';
-import userRepository from '../../data/repository/users';
-import twaatsRepository from '../../data/repository/twaats';
-import './comment';
 import './content';
 import '../ui/button';
 import '../ui/icon';
 import '../ui/tooltip';
-import { firestorage } from '../../db';
+import './buttons';
+import './picture';
 
 dayjs.extend(relativeTime);
 
@@ -19,8 +17,6 @@ class Item extends LitElement {
     this.item = {};
     this.author = null;
     this.child = null;
-    this.userLiked = false;
-    this.userRetwaated = false;
   }
 
   static get properties() {
@@ -28,8 +24,6 @@ class Item extends LitElement {
       item: Object,
       author: Object,
       child: Object,
-      userLiked: Boolean,
-      userRetwaated: Boolean,
     };
   }
 
@@ -81,28 +75,10 @@ class Item extends LitElement {
       .name a:hover {
         color: ${colors.blue};
       }
-      .button-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        max-width: 425px;
-      }
-      app-button {
-        color: ${colors.grey};
-        font-weight: normal;
-      }
-      app-twaat-comment {
-        margin-top: 10px;
-      }
     `;
   }
 
   async firstUpdated() {
-    this.userLiked = this.item.laaks
-      .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
-    this.userRetwaated = this.item.retwaats
-      .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
-
     this.item.author.get().then((doc) => {
       this.author = doc.data();
     });
@@ -111,45 +87,6 @@ class Item extends LitElement {
         this.child = doc.data();
       });
     }
-    if (this.item.picture) {
-      firestorage.ref(this.item.picture).getDownloadURL().then((url) => {
-        this.twaatPicture = url;
-      });
-    }
-  }
-
-  async onLike() {
-    if (this.userLiked) {
-      twaatsRepository.delLaaked(this.item.id);
-      this.userLiked = false;
-    } else {
-      twaatsRepository.addLaaked(this.item.id);
-      this.userLiked = true;
-    }
-    return true;
-  }
-
-  onDelete() {
-    if (this.item.child) {
-      twaatsRepository.unretwaat(this.item.child);
-    }
-    twaatsRepository.del(this.item.id);
-  }
-
-  async onRetwaat() {
-    console.log(this.userRetwaated);
-    if (this.userRetwaated === false) {
-      twaatsRepository.addRetwaat(this.item.id);
-      twaatsRepository.add({
-        child: twaatsRepository.get(this.item.id),
-      });
-      this.userRetwaated = true;
-    }
-    return true;
-  }
-
-  onComment() {
-    // TODO: toggle le form pour commenter
   }
 
   render() {
@@ -199,25 +136,9 @@ class Item extends LitElement {
                 && html`
                   <app-twaats-content .content=${this.child.content}></app-twaats-content>
                 `}
-              ${this.twaatPicture && html`
-                <div><img src=${this.twaatPicture} alt="Twaat picture" /></div>
-              `}
+              ${this.item.picture && html`<app-twaat-item-picture .item=${this.item} />`}
             </div>
-            <div class="button-container grey">
-              <app-button icon="comment" @click=${this.onComment}>0</app-button>
-              <app-button
-                .color=${this.userRetwaated ? '#17bf63' : null}
-                icon="retwaat"
-                @click=${this.onRetwaat}
-              >${this.item.retwaats.length}</app-button>
-              <app-button
-                .icon=${this.userLiked ? 'like-full' : 'like'}
-                .color=${this.userLiked ? 'red' : null}
-                @click=${this.onLike}
-              >${this.item.laaks.length || 0}</app-button>
-              <app-button icon="delete" @click=${this.onDelete}></app-button>
-            </div>
-            <app-twaat-comment .parent=${this.item.id} />
+            <app-twaat-item-buttons .item=${this.item} />
           </div>
         </div>
       </article>

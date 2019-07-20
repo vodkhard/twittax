@@ -5,13 +5,14 @@ const collection = 'twaats';
 const get = id => firestore.collection(collection).doc(id);
 
 const add = (payload) => {
-  const tags = [...payload.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);
+  const tags = payload.content ? [...payload.content.matchAll(/\B\#\w+/gm)].map(([match]) => match) : null;
   const authorRef = firestore.collection('users').doc(fireauth.currentUser.uid);
 
   return firestore.collection(collection).add({
     ...payload,
     laaks: [],
     retwaats: [],
+    comments: [],
     tags: tags || [],
     author: authorRef,
     subscribers: [authorRef],

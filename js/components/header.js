@@ -50,7 +50,6 @@ class Header extends LitElement {
   render() {
     return html`
       <header>
-          <h1 class="top">Twittax</h1>
           <nav>
             <a href="/" class="tab active">
               <div class="tab-button">
