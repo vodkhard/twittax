@@ -20,6 +20,10 @@ exports.onUnfollow = functions.region('europe-west1').firestore
   .document('/users/{userId}/followers/{followerId}')
   .onDelete((snapshot, context) => follow.onUnfollow(snapshot, context));
 
+exports.onUnfollowUnsubscribe = functions.region('europe-west1').firestore
+  .document('/users/{userId}/followers/{followerId}')
+  .onDelete((snapshot, context) => follow.onUnfollowUnsubscribe(snapshot, context, db, fieldValue));
+
 exports.addFeed = functions.region('europe-west1').firestore.document('/twaats/{twaatId}').onCreate(snap => feed.addFeed(snap, fieldValue));
 
 exports.generateThumbnail = functions.region('europe-west1').storage.object().onFinalize(

@@ -27,3 +27,19 @@ exports.onUnfollow = async (snapshot, context) => {
   return currentUser.collection('followed').doc(userId)
     .delete();
 };
+
+exports.onUnfollowUnsubscribe = async (snapshot, context, firestore, fieldValue) => {
+  const { userId } = context.params;
+  const currentUser = snapshot.data().ref;
+
+  firestore.collection('twaats')
+    .where('author', '==', firestore.collection('users').doc(userId))
+    .get()
+    .then(({ docs }) => {
+      docs.forEach((twaat) => {
+        twaat.ref.update({
+          subscribers: fieldValue.arrayRemove(currentUser),
+        });
+      });
+    });
+};
