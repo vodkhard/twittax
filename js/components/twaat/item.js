@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit-element';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { colors } from '../ui/variables';
-import './comment';
 import './content';
 import '../ui/button';
 import '../ui/icon';
@@ -76,9 +75,6 @@ class Item extends LitElement {
       .name a:hover {
         color: ${colors.blue};
       }
-      app-twaat-comment {
-        margin-top: 10px;
-      }
     `;
   }
 
@@ -143,7 +139,6 @@ class Item extends LitElement {
               ${this.item.picture && html`<app-twaat-item-picture .item=${this.item} />`}
             </div>
             <app-twaat-item-buttons .item=${this.item} />
-            <app-twaat-comment .parent=${this.item.id} />
           </div>
         </div>
       </article>

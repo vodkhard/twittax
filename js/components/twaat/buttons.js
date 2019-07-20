@@ -4,9 +4,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import userRepository from '../../data/repository/users';
 import twaatsRepository from '../../data/repository/twaats';
 import { colors } from '../ui/variables';
+import { fieldValue } from '../../db';
 import '../ui/button';
 import '../ui/icon';
 import '../ui/tooltip';
+import './input';
 
 dayjs.extend(relativeTime);
 
@@ -14,15 +16,15 @@ class Buttons extends LitElement {
   constructor() {
     super();
     this.item = {};
-    this.userLiked = false;
-    this.userRetwaated = false;
+    this.liked = false;
+    this.retwaated = false;
   }
 
   static get properties() {
     return {
       item: Object,
-      userLiked: Boolean,
-      userRetwaated: Boolean,
+      liked: Boolean,
+      retwaated: Boolean,
     };
   }
 
@@ -42,19 +44,19 @@ class Buttons extends LitElement {
   }
 
   updated() {
-    this.userLiked = this.item.laaks
+    this.liked = this.item.laaks
       .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
-    this.userRetwaated = this.item.retwaats
+    this.retwaated = this.item.retwaats
       .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
   }
 
   async onLike() {
-    if (this.userLiked) {
+    if (this.liked) {
       twaatsRepository.delLaaked(this.item.id);
-      this.userLiked = false;
+      this.liked = false;
     } else {
       twaatsRepository.addLaaked(this.item.id);
-      this.userLiked = true;
+      this.liked = true;
     }
     return true;
   }
@@ -67,34 +69,38 @@ class Buttons extends LitElement {
   }
 
   onRetwaat() {
-    if (this.userRetwaated === false) {
+    if (this.retwaated === false) {
       twaatsRepository.add({
         child: twaatsRepository.get(this.item.id),
       }).then(() => {
-        this.userRetwaated = true;
+        this.retwaated = true;
         twaatsRepository.addRetwaat(this.item.id);
       });
-      this.userRetwaated = true;
+      this.retwaated = true;
     }
   }
 
-  onComment() {
-    // TODO: toggle le form pour commenter
+  onComment({ detail: ref }) {
+    twaatsRepository.update(this.item.id, {
+      comments: fieldValue.arrayUnion(ref),
+    });
   }
 
   render() {
     return html`
-      <app-button icon="comment" @click=${this.onComment}>0</app-button>
+      <app-twaat-input .parent=${this.item} @onAdd=${this.onComment}>
+        <app-button icon="comment">${this.item.comments.length}</app-button>
+      </app-twaat-input>
       <app-button
-        .color=${this.userRetwaated ? '#17bf63' : null}
+        .color=${this.retwaated ? '#17bf63' : null}
         icon="retwaat"
         @click=${this.onRetwaat}
       >${this.item.retwaats.length}</app-button>
       <app-button
-        .icon=${this.userLiked ? 'like-full' : 'like'}
-        .color=${this.userLiked ? 'red' : null}
+        .icon=${this.liked ? 'like-full' : 'like'}
+        .color=${this.liked ? 'red' : null}
         @click=${this.onLike}
-      >${this.item.laaks.length || 0}</app-button>
+      >${this.item.laaks.length}</app-button>
       <app-button icon="delete" @click=${this.onDelete}></app-button>
     `;
   }

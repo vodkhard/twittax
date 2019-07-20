@@ -4,7 +4,7 @@ import 'dile-modal/dile-modal';
 import '../ui/icon';
 import { colors } from '../ui/variables';
 import twaatsRepository from '../../data/repository/twaats';
-import { firestorage } from '../../db';
+import {fieldValue, firestorage} from '../../db';
 
 function readURL(file) {
   return new Promise((resolve) => {
@@ -27,6 +27,7 @@ class Input extends LitElement {
       content: String,
       modalId: String,
       handleSubmit: Function,
+      parent: Object,
     };
   }
 
@@ -101,12 +102,16 @@ class Input extends LitElement {
         uploadPic.put(picture);
       });
     }
+    if (this.parent) {
+      payload.parent = twaatsRepository.get(this.parent.id);
+    }
     twaatsRepository
       .add(payload)
-      .then(() => {
+      .then((ref) => {
         this.shadowRoot.getElementById('modal-input').close();
         this.content = '';
         this.togglePreview();
+        this.dispatchEvent(new CustomEvent('onAdd', { detail: ref }));
       });
   }
 
@@ -129,7 +134,9 @@ class Input extends LitElement {
 
   render() {
     return html`
-      <button @click=${this.open}>Quoi de neuf ?</button>
+      <slot @click=${this.open}>
+        <button>Quoi de neuf ?</button>
+      </slot>
       <dile-modal id="modal-input" showCloseIcon @dile-modal-closed=${this.togglePreview}>
         <form @submit=${this.handleSubmit}>
           <textarea

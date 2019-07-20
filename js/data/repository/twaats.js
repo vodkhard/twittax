@@ -12,6 +12,7 @@ const add = (payload) => {
     ...payload,
     laaks: [],
     retwaats: [],
+    comments: [],
     tags: tags || [],
     author: authorRef,
     subscribers: [authorRef],
