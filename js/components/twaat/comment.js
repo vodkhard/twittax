@@ -59,8 +59,6 @@ class Comment extends LitElement {
       twaatsRepository
         .add({
           content: this.content,
-          like: 0,
-          retwaats: 0,
           parent: twaatsRepository.get(this.parent),
         })
         .then(() => {

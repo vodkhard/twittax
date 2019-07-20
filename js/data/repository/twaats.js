@@ -2,16 +2,23 @@ import { firestore, fireauth, fieldValue } from '../../db';
 
 const collection = 'twaats';
 
-const get = id => firestore.collection('twaats').doc(id);
+const get = id => firestore.collection(collection).doc(id);
 
-const add = payload => firestore.collection('twaats').add({
-  ...payload,
-  author: firestore.collection('users').doc(fireauth.currentUser.uid),
-  createdAt: fieldValue.serverTimestamp(),
-});
+const add = (payload) => {
+  const tags = [...payload.content.matchAll(/\B\#\w+/gm)].map(([match]) => match);
+
+  return firestore.collection(collection).add({
+    ...payload,
+    laaks: [],
+    retwaats: [],
+    tags: tags || [],
+    author: firestore.collection('users').doc(fireauth.currentUser.uid),
+    createdAt: fieldValue.serverTimestamp(),
+  });
+};
 
 const update = (id, payload) => firestore
-  .collection('twaats')
+  .collection(collection)
   .doc(id)
   .update({
     ...payload,
@@ -19,7 +26,7 @@ const update = (id, payload) => firestore
   });
 
 const del = id => firestore
-  .collection('twaats')
+  .collection(collection)
   .doc(id)
   .delete();
 
