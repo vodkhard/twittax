@@ -91,12 +91,6 @@ const delLaaked = async id => firestore.collection(collection)
     laaks: fieldValue.arrayRemove(await firestore.collection('users').doc(fireauth.currentUser.uid)),
   });
 
-const hasUserLaaked = id => firestore.collection(collection)
-  .doc(id)
-  .get().then(twaat => twaat.data().laaks.find(
-    value => value.isEqual(firestore.collection('users').doc(fireauth.currentUser.uid)),
-  ));
-
 const addRetwaat = id => firestore.collection(collection)
   .doc(id)
   .update({
@@ -116,6 +110,7 @@ const hasUserRetwaat = id => firestore.collection(collection)
 
 export default {
   getByName,
+  getCurrentUser,
   get,
   add,
   update,
@@ -124,7 +119,6 @@ export default {
   toggleFollow,
   addLaaked,
   delLaaked,
-  hasUserLaaked,
   addRetwaat,
   unretwaat,
   hasUserRetwaat,
