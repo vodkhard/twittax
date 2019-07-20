@@ -38,6 +38,22 @@ class Picture extends LitElement {
   async firstUpdated() {
     const [r, g, b] = this.item.picture_placeholder;
     this.picturePlaceholder = `rgb(${r}, ${g}, ${b})`;
+    firestorage.ref(this.item.picture).getDownloadURL().then((url) => {
+      this.shadowRoot.querySelector('.twaat_picture > img').dataset.src = url;
+      if ('IntersectionObserver' in window) {
+        const lazyImageObserver = new IntersectionObserver(((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const lazyImage = entry.target;
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        }));
+
+        lazyImageObserver.observe(this.shadowRoot.querySelector('img'));
+      }
+    });
     firestorage.ref(this.item.thumb).getDownloadURL().then((url) => {
       this.shadowRoot.querySelector('.twaat_picture > img').src = url;
     });
@@ -46,7 +62,7 @@ class Picture extends LitElement {
   render() {
     return html`
       <div class="twaat_picture" .style=${`background-color: ${this.picturePlaceholder}`}>
-        <img src="" alt="Twaat picture" />
+        <img src="" data-src="" alt="Twaat picture" />
       </div>
     `;
   }
