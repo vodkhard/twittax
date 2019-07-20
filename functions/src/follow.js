@@ -6,6 +6,21 @@ exports.onFollow = (snapshot, fieldValue) => {
   });
 };
 
+exports.onFollowSubscribe = (snapshot, context, firestore, fieldValue) => {
+  const { userId } = context.params;
+  const follower = snapshot.data().ref;
+  firestore.collection('twaats')
+    .where('author', '==', firestore.collection('users').doc(userId))
+    .get()
+    .then(({ docs }) => {
+      docs.forEach((twaat) => {
+        twaat.ref.update({
+          subscribers: fieldValue.arrayUnion(follower),
+        });
+      });
+    });
+};
+
 exports.onUnfollow = async (snapshot, context) => {
   const { userId } = context.params;
   const currentUser = snapshot.data().ref;
