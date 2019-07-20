@@ -45,8 +45,10 @@ class Layout extends LitElement {
     }
 
     return html`
-      <app-auth></app-auth>
-      <app-login></app-login>
+      <div id="layout--container">
+        <app-auth></app-auth>
+        <app-login></app-login>
+      </div>
     `;
   }
 }

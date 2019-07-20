@@ -130,7 +130,7 @@ class Input extends LitElement {
   render() {
     return html`
       <button @click=${this.open}>Quoi de neuf ?</button>
-      <dile-modal id="modal-input" showCloseIcon @dile-modal-closed=${() => this.togglePreview()}>
+      <dile-modal id="modal-input" showCloseIcon @dile-modal-closed=${this.togglePreview}>
         <form @submit=${this.handleSubmit}>
           <textarea
             name="content"

@@ -21,6 +21,8 @@ class Buttons extends LitElement {
   static get properties() {
     return {
       item: Object,
+      userLiked: Boolean,
+      userRetwaated: Boolean,
     };
   }
 
@@ -39,7 +41,7 @@ class Buttons extends LitElement {
     `;
   }
 
-  async firstUpdated() {
+  updated() {
     this.userLiked = this.item.laaks
       .find(value => value.isEqual(userRepository.getCurrentUser())) !== undefined;
     this.userRetwaated = this.item.retwaats
@@ -64,15 +66,16 @@ class Buttons extends LitElement {
     twaatsRepository.del(this.item.id);
   }
 
-  async onRetwaat() {
+  onRetwaat() {
     if (this.userRetwaated === false) {
-      twaatsRepository.addRetwaat(this.item.id);
       twaatsRepository.add({
         child: twaatsRepository.get(this.item.id),
+      }).then(() => {
+        this.userRetwaated = true;
+        twaatsRepository.addRetwaat(this.item.id);
       });
       this.userRetwaated = true;
     }
-    return true;
   }
 
   onComment() {
