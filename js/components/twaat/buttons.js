@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import userRepository from '../../data/repository/users';
 import twaatsRepository from '../../data/repository/twaats';
 import { colors } from '../ui/variables';
-import { fieldValue } from '../../db';
+import { fieldValue, fireauth } from '../../db';
 import '../ui/button';
 import '../ui/icon';
 import '../ui/tooltip';
@@ -101,7 +101,8 @@ class Buttons extends LitElement {
         .color=${this.liked ? 'red' : null}
         @click=${this.onLike}
       >${this.item.laaks.length}</app-button>
-      <app-button icon="delete" @click=${this.onDelete}></app-button>
+      ${this.item.author.id === fireauth.currentUser.uid
+        ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : null}
     `;
   }
 }

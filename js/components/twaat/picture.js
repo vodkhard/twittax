@@ -55,7 +55,10 @@ class Picture extends LitElement {
       }
     });
     firestorage.ref(this.item.thumb).getDownloadURL().then((url) => {
-      this.shadowRoot.querySelector('.twaat_picture > img').src = url;
+      const image = this.shadowRoot.querySelector('.twaat_picture > img');
+      if (image.src === '') {
+        image.src = url;
+      }
     });
   }
 
