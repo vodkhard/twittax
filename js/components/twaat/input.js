@@ -20,7 +20,6 @@ class Input extends LitElement {
   constructor() {
     super();
     this.content = '';
-    this.previewPath = null;
   }
 
   static get properties() {

@@ -40,6 +40,7 @@ class Layout extends LitElement {
         <div id="layout--container">
           <slot .user=${this.user}></slot>
         </div>
+        <button @click=${fireauth.signOut}>Logout</button>
       `;
     }
 
