@@ -64,15 +64,6 @@ const addFollower = id => firestore.collection(collection)
 
 const delFollower = async id => get(id).collection('followers').doc(await getFollowerIdByUserId(id)).delete();
 
-const toggleFollow = (id, followed) => {
-  if (followed) {
-    delFollower(id);
-    return false;
-  }
-  addFollower(id);
-  return true;
-};
-
 const addLaaked = id => firestore.collection(collection)
   .doc(id)
   .update({
@@ -110,7 +101,8 @@ export default {
   update,
   del,
   isFollowing: getFollowerIdByUserId,
-  toggleFollow,
+  addFollower,
+  delFollower,
   addLaaked,
   delLaaked,
   addRetwaat,

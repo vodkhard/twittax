@@ -37,16 +37,20 @@ class Profile extends LitElement {
     this.user = await userRepository.getByName(this.location.params.name);
     this.authUser = fireauth.currentUser;
     this.followed = await userRepository.isFollowing(this.user.id);
-
-    this.toggleFollow = () => {
-      this.followed = userRepository.toggleFollow(this.user.id, this.followed);
-    };
   }
 
+  toggleFollow() {
+    if (this.followed) {
+      userRepository.delFollower(this.user.id);
+      this.followed = false;
+    } else {
+      userRepository.addFollower(this.user.id);
+      this.followed = true;
+    }
+  }
 
   render() {
     return html`
-      <app-header></app-header>
       ${this.user
     ? html`${this.user.id === this.authUser.uid ? html`<app-button type=button>Update my profile</app-button>`
       : html`<app-button type=button @click=${this.toggleFollow}>${this.followed ? 'Unfollax' : 'Follax'}</app-button>`

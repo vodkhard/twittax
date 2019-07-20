@@ -22,7 +22,7 @@ class Twax extends LitElement {
 
   static get styles() {
     return css`
-      article {
+      .sub_header {
         padding: 1rem 9px;
         border-bottom: 1px solid #e6ecf0;
       }
@@ -53,27 +53,19 @@ class Twax extends LitElement {
   }
 
   render() {
-    if (this.user) {
-      return html`
-        <app-header></app-header>
-        <article class="container">
-          <div class="left">
-            <img src="/assets/default_profile_400x400.png">
-          </div>
-          <div class="right">
-             <app-twaat-input></app-twaat-input> 
-          </div>
-        </article>
-
-        <app-twaat-list 
-          .conditions=${[['subscribers', 'array-contains', userRepository.get(this.user.uid)]]}
-        ></app-twaat-list>
-        `;
-    }
-
     return html`
-      <app-auth></app-auth>
-      <app-login></app-login>
+      <div class="sub_header">
+        <div class="left">
+          <img src="/assets/default_profile_400x400.png">
+        </div>
+        <div class="right">
+           <app-twaat-input></app-twaat-input> 
+        </div>
+      </div>
+
+      ${this.user && html`<app-twaat-list 
+        .conditions=${[['subscribers', 'array-contains', userRepository.get(this.user.uid)]]}
+      ></app-twaat-list>`}
     `;
   }
 }

@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import ColorThief from 'color-thief';
 import 'dile-modal/dile-modal';
 import '../ui/icon';
 import { colors } from '../ui/variables';
@@ -69,73 +70,74 @@ class Input extends LitElement {
       #preview {
         max-height: 200px;
         max-width: 100%;
+        display: none;
+      }
+      dile-modal {
+        --dile-modal-background-color: rgba(0, 0, 0, 0.3);
+        --dile-modal-max-height: 90vh;
+        --dile-modal-max-width: 80vw;
+        --dile-modal-min-width: 600px;
+        --dile-modal-border-radius: 5px;
+        --dile-modal-content-shadow-displacement: 0;
+        --dile-modal-content-shadow-blur: 0;
+        --dile-modal-close-icon-color: #1da1F2;
       }
     `;
   }
 
-  firstUpdated() {
-    this.twaatInput = (e) => {
-      this.content = e.target.value;
+  handleSubmit(e) {
+    e.preventDefault();
+    const payload = {
+      content: this.content,
     };
-    this.handleSubmit = (e) => {
-      e.preventDefault();
-      const payload = {
-        content: this.content,
-      };
-      const pictures = this.shadowRoot.querySelector('input[name=picture]').files;
-      if (pictures) {
-        const storageRef = firestorage.ref();
-        [...pictures].forEach((picture) => {
-          const uploadPic = storageRef.child(`twaats/${picture.name}`);
-          payload.picture = uploadPic.fullPath;
-          uploadPic.put(picture);
-        });
-      }
-      twaatsRepository
-        .add(payload)
-        .then(() => {
-          this.content = '';
-        });
-    };
+    const pictures = this.shadowRoot.querySelector('input[name=picture]').files;
+    if (pictures) {
+      const storageRef = firestorage.ref();
+      const ct = new ColorThief();
+      [...pictures].forEach((picture) => {
+        payload.picture_placeholder = ct.getColor(this.shadowRoot.getElementById('preview'));
+        const uploadPic = storageRef.child(`twaats/${picture.name}`);
+        payload.picture = uploadPic.fullPath;
+        payload.thumb = storageRef.child(`twaats/thumb_${picture.name}`).fullPath;
+        uploadPic.put(picture);
+      });
+    }
+    twaatsRepository
+      .add(payload)
+      .then(() => {
+        this.shadowRoot.getElementById('modal-input').close();
+        this.content = '';
+        this.togglePreview();
+      });
   }
 
   open() {
     this.shadowRoot.getElementById('modal-input').open();
   }
 
-  handleUploadClick() {
-    this.shadowRoot.querySelector('input[name=picture]').click();
+  handleImageUpload() {
+    const input = this.shadowRoot.querySelector('input[name=picture]');
+    const picture = input.files[0];
+    readURL(picture).then((path) => {
+      this.togglePreview(path);
+    });
   }
 
-  handleImageUpload() {
-    const picture = this.shadowRoot.querySelector('input[name=picture]').files[0];
-    readURL(picture).then((path) => {
-      this.shadowRoot.getElementById('preview').src = path;
-    });
+  togglePreview(path = null) {
+    this.shadowRoot.getElementById('preview').src = path || '';
+    this.shadowRoot.getElementById('preview').style.display = path ? 'unset' : 'none';
   }
 
   render() {
     return html`
       <button @click=${this.open}>Quoi de neuf ?</button>
-      <style>
-        dile-modal {
-          --dile-modal-background-color: rgba(0, 0, 0, 0.3);
-          --dile-modal-max-height: 90vh;
-          --dile-modal-max-width: 80vw;
-          --dile-modal-min-width: 600px;
-          --dile-modal-border-radius: 5px;
-          --dile-modal-content-shadow-displacement: 0;
-          --dile-modal-content-shadow-blur: 0;
-          --dile-modal-close-icon-color: #1da1F2;
-        }
-      </style>
-      <dile-modal id="modal-input" showCloseIcon>
+      <dile-modal id="modal-input" showCloseIcon @dile-modal-closed=${() => this.togglePreview()}>
         <form @submit=${this.handleSubmit}>
           <textarea
             name="content"
             placeholder="Quoi de neuf ?"
             .value="${this.content}"
-            @input=${this.twaatInput}
+            @input=${(e) => { this.content = e.target.value; }}
           ></textarea>
           <input 
             name="picture" 
@@ -149,7 +151,7 @@ class Input extends LitElement {
           <img src="" id="preview" alt="Preview picture">
         </div>
         <div>
-          <app-icon icon="image" @click=${this.handleUploadClick} />
+          <app-icon icon="image" @click=${() => this.shadowRoot.querySelector('input[name=picture]').click()} />
         </div>
       </dile-modal>
     `;
