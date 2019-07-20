@@ -4,7 +4,6 @@ import userRepository from '../data/repository/users';
 import { colors } from './ui/variables';
 import './twaat/list';
 import './header';
-import { log } from 'util';
 
 class Profile extends LitElement {
   constructor() {
@@ -37,7 +36,7 @@ class Profile extends LitElement {
   async firstUpdated() {
     this.user = await userRepository.getByName(this.location.params.name);
     this.authUser = fireauth.currentUser;
-    userRepository.isFollowing(this.user.id).then((res) => { this.followed = res; });
+    this.followed = await userRepository.isFollowing(this.user.id);
 
     this.toggleFollow = () => {
       this.followed = userRepository.toggleFollow(this.user.id, this.followed);

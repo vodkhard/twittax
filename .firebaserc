@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "twittax-b1015"
+    "default": "twittax-b1015",
+    "twittax": "twittax-7f818"
   }
 }
