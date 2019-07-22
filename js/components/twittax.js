@@ -1,6 +1,6 @@
 /* eslint-disable no-tabs */
 import { LitElement, html, css } from 'lit-element';
-import { fireauth } from '../db';
+import { fireauth, firestorage } from '../db';
 import userRepository from '../data/repository/users';
 import './twaat/input';
 import './twaat/list';
@@ -12,11 +12,13 @@ class Twax extends LitElement {
   constructor() {
     super();
     this.user = null;
+    this.image = 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png';
   }
 
   static get properties() {
     return {
       user: Object,
+      image: String,
     };
   }
 
@@ -49,6 +51,11 @@ class Twax extends LitElement {
   firstUpdated() {
     fireauth.onAuthStateChanged((user) => {
       this.user = user;
+      firestorage.ref().child(user.photoURL).getDownloadURL().then((url) => {
+        this.image = url;
+      })
+        .catch((error) => {
+        });
     });
   }
 
@@ -56,7 +63,7 @@ class Twax extends LitElement {
     return html`
       <div class="sub_header">
         <div class="left">
-          <img src="/assets/default_profile_400x400.png">
+          <img src="${this.image}">
         </div>
         <div class="right">
            <app-twaat-input></app-twaat-input> 
