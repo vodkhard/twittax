@@ -8,4 +8,20 @@ export const notification = (content) => {
   }
 };
 
-export default notification;
+export const requestPermission = () => {
+  if (('serviceWorker' in navigator) || ('PushManager' in window)) {
+    Notification.requestPermission()
+      .then((result) => {
+        switch (result) {
+          case 'granted':
+            console.log('Notification granted');
+            break;
+          case 'denied':
+            console.log('Permission wasn\'t granted. Allow a retry');
+            break;
+          default:
+            console.log('Permission request dismissed by default');
+        }
+      });
+  }
+};

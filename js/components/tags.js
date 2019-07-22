@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit-element';
 import './twaat/list';
-import './header';
 
 class Profile extends LitElement {
   constructor() {

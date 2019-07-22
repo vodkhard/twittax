@@ -51,22 +51,12 @@ class Header extends LitElement {
     return html`
       <header>
           <nav>
-            <a href="/" class="tab active">
+            <a href="/" class="tab active" aria-label="home">
               <div class="tab-button">
                 <app-icon icon="home"></app-icon>
               </div>
             </a>
-            <a href="#" class="tab">
-              <div class="tab-button">
-                <app-icon icon="hashtag"></app-icon>
-              </div>
-            </a>
-            <a href="#" class="tab">
-              <div class="tab-button">
-                <app-icon icon="bell"></app-icon>
-              </div>
-            </a>
-            <a href="/settings" class="tab">
+            <a href="/settings" class="tab" aria-label="settings">
               <div class="tab-button">
                 <app-icon icon="user"></app-icon>
               </div>

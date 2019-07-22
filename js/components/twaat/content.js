@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import userRepository from '../../data/repository/users';
 import { colors } from '../ui/variables';
-import { notification } from './notification';
+import { notification, requestPermission } from './notification';
 import { fireauth } from '../../db';
 
 class Content extends LitElement {
@@ -34,6 +34,7 @@ class Content extends LitElement {
       if (content.startsWith('@')) {
         userRepository.getByName(content).then((u) => {
           if (u.id === fireauth.currentUser.uid) {
+            requestPermission();
             notification("You've been mentioned in a twaat !");
           }
         });

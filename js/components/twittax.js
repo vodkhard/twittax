@@ -12,7 +12,6 @@ class Twax extends LitElement {
   constructor() {
     super();
     this.user = null;
-    this.image = 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png';
   }
 
   static get properties() {
@@ -25,8 +24,10 @@ class Twax extends LitElement {
   static get styles() {
     return css`
       .sub_header {
-        padding: 1rem 9px;
+        padding: 1rem 10px;
         border-bottom: 1px solid #e6ecf0;
+        display: flex;
+        align-items: center;
       }
       .container {
         display: flex;
@@ -34,28 +35,20 @@ class Twax extends LitElement {
       .container > div {
         margin: 0 5px;
       }
-      .left {
-        max-width: 46px;
-        width: 100%;
-      }
       .right {
         flex-grow: 1;
-      }
-      img {
-        max-width: 100%;
-        border-radius: 999px;
-        pointer-events: none;
+        margin-left: 10px;
       }`;
   }
 
   firstUpdated() {
     fireauth.onAuthStateChanged((user) => {
       this.user = user;
-      firestorage.ref().child(user.photoURL).getDownloadURL().then((url) => {
-        this.image = url;
-      })
-        .catch((error) => {
+      if (user) {
+        firestorage.ref().child(user.photoURL).getDownloadURL().then((url) => {
+          this.image = url;
         });
+      }
     });
   }
 
@@ -63,7 +56,7 @@ class Twax extends LitElement {
     return html`
       <div class="sub_header">
         <div class="left">
-          <img src="${this.image}">
+          <app-profile-picture .source=${this.image} />
         </div>
         <div class="right">
            <app-twaat-input></app-twaat-input> 

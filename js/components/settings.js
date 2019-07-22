@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit-element';
 import { firestorage, fireauth } from '../db';
+import userRepository from '../data/repository/users';
 import './header';
 
 class Settings extends LitElement {
@@ -28,6 +29,9 @@ class Settings extends LitElement {
         user.updateProfile({
           photoURL: metadata.fullPath,
         }).then(() => {
+          userRepository.update(user.uid, {
+            photoURL: metadata.fullPath,
+          });
           window.location = '/';
         });
       });
@@ -41,6 +45,7 @@ class Settings extends LitElement {
         <input type="file" accept="image/*" @change="${this.handleFileUploadChange}"/>
         <button @click="${this.handleFileUploadSubmit}">Valider</button>
       </div>
+      <button @click=${() => fireauth.signOut()}>Logout</button>
     `;
   }
 }

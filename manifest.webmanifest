@@ -1,0 +1,23 @@
+{
+  "name": "Twittax",
+  "short_name": "twittax",
+  "theme_color": "#1da1f2",
+  "background_color": "#1da1f2",
+  "display": "standalone",
+  "orientation": "portrait",
+  "Scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "images/icons/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
