@@ -3,6 +3,8 @@ import { fireauth } from '../db';
 import './auth/app-auth';
 import './auth/app-login';
 import './header';
+import logo from '/assets/logo.jpg';
+import { colors } from './ui/variables';
 
 class Layout extends LitElement {
   constructor() {
@@ -24,6 +26,32 @@ class Layout extends LitElement {
         border-bottom: none;
         margin: auto;
       }
+      #layout--home {
+        max-width: 600px;
+        margin: 20vh auto auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      a {
+        text-decoration: none;
+        background-color: ${colors.blue};
+        color: #fff;
+        padding: 6px 15px;
+        border-radius: 30px;
+        font-size: 24px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        width: 150px;
+        text-align: center;
+        margin: 10px 0;
+      }
+      a#register {
+        background-color: #fff;
+        border: 1px solid ${colors.blue};
+        color: ${colors.blue};
+      }
     `;
   }
 
@@ -40,14 +68,16 @@ class Layout extends LitElement {
         <div id="layout--container">
           <slot .user=${this.user}></slot>
         </div>
-        <button @click=${fireauth.signOut}>Logout</button>
       `;
     }
 
     return html`
-      <div id="layout--container">
-        <app-auth></app-auth>
-        <app-login></app-login>
+      <div id="layout--home">
+        <div>
+          <img src=${logo} alt="logo" width="300" />
+        </div>
+        <a href="/login" id="login" aria-label="Login">Login</a>
+        <a href="/register" id="register" aria-label="Register">Register</a>
       </div>
     `;
   }

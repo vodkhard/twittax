@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit-element';
-import ColorThief from 'color-thief';
+import ColorThief from 'colorthief/dist/color-thief.mjs';
 import 'dile-modal/dile-modal';
 import '../ui/icon';
 import { colors } from '../ui/variables';
 import twaatsRepository from '../../data/repository/twaats';
-import {fieldValue, firestorage} from '../../db';
+import { firestorage } from '../../db';
 
 function readURL(file) {
   return new Promise((resolve) => {
@@ -56,13 +56,22 @@ class Input extends LitElement {
       button {
         background-color: ${colors.blue};
         color: #fff;
-        font-weight: bold;
         padding: 6px 15px;
         border-radius: 30px;
         font-size: 13px;
+        font-weight: bold;
         border: none;
         cursor: pointer;
         outline: none;
+      }
+      #whatsup {
+        background-color: ${colors.lightgrey};
+        color: ${colors.grey};
+        padding: 10px 15px;
+        font-size: 15px;
+        font-weight: 400;
+        width: 100%;
+        text-align: left;
       }
       input[type=file] {
         display: none;
@@ -135,7 +144,7 @@ class Input extends LitElement {
   render() {
     return html`
       <slot @click=${this.open}>
-        <button>Quoi de neuf ?</button>
+        <button id="whatsup">Quoi de neuf ?</button>
       </slot>
       <dile-modal id="modal-input" showCloseIcon @dile-modal-closed=${this.togglePreview}>
         <form @submit=${this.handleSubmit}>

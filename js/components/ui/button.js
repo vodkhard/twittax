@@ -39,7 +39,7 @@ class Button extends LitElement {
           color: ${this.color}
         }
       </style>
-      <button type="button">
+      <button type="button" aria-label="button">
         <app-icon .icon=${this.icon} .color=${this.color}></app-icon>
         <div>
           <slot></slot>

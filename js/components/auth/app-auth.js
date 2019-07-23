@@ -19,6 +19,11 @@ class AppAuth extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        display: block;
+        max-width: 600px;
+        margin: auto;
+      }
       h2 {
         margin-top: 50px;
         text-align: center;
@@ -50,7 +55,12 @@ class AppAuth extends LitElement {
         padding: 10px 15px;
         font-size: 14px;
         border-radius:2px;
-      }`;
+      }
+      a {
+        display: block;
+        text-align: center;
+      }
+    `;
   }
 
   handleForm(e) {
@@ -75,34 +85,41 @@ class AppAuth extends LitElement {
 
         this.email = '';
         this.password = '';
-      })
-      .catch(console.error);
+        window.location = '/';
+      });
   }
 
   render() {
     return html`
       <h2>S'inscrire</h2>
       <form @submit="${this.handleForm}">
+        <label for="username">Nom d'utilisateur</label>
         <input
           type="text"
-          placeholder="@"
+          placeholder="@username"
+          id="username"
           .value="${this.username}"
           @input="${(e) => { this.username = e.target.value; }}"
         />
+        <label for="email">E-mail</label>
         <input
           type="email"
-          placeholder="E-mail"
+          placeholder="twittax@mail.com"
+          id="email"
           .value="${this.email}"
           @input="${(e) => { this.email = e.target.value; }}"
         />
+        <label for="password">Mot de passe</label>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="@d4$yzXV^FdfDj"
+          id="password"
           .value="${this.password}"
           @input="${(e) => { this.password = e.target.value; }}"
         />
         <button type="submit">S'inscrire</button>
       </form>
+      <a href="/login">J'ai déjà un compte</a>
     `;
   }
 }

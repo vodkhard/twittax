@@ -4,6 +4,7 @@ import userRepository from '../data/repository/users';
 import { colors } from './ui/variables';
 import './twaat/list';
 import './header';
+import './ui/button';
 
 class Profile extends LitElement {
   constructor() {
@@ -53,7 +54,7 @@ class Profile extends LitElement {
     return html`
       ${this.user
     ? html`${this.user.id === this.authUser.uid ? html`<app-button type=button>Update my profile</app-button>`
-      : html`<app-button type=button @click=${this.toggleFollow}>${this.followed ? 'Unfollax' : 'Follax'}</app-button>`
+      : html`<app-button @click=${this.toggleFollow}>${this.followed ? 'Unfollax' : 'Follax'}</app-button>`
     }
             <app-twaat-list .conditions=${[['author', '==', userRepository.get(this.user.id)]]} />
           `

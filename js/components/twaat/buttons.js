@@ -102,7 +102,7 @@ class Buttons extends LitElement {
         @click=${this.onLike}
       >${this.item.laaks.length}</app-button>
       ${this.item.author.id === fireauth.currentUser.uid
-        ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : null}
+    ? html`<app-button icon="delete" @click=${this.onDelete}></app-button>` : null}
     `;
   }
 }
